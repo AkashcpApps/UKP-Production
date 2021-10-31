@@ -24,9 +24,23 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+.home,
+.masterdata,
+.districts,
+.taluks,
+.villages,
+.structureelements,
+.strucutretype,
+.allusers {
+    display: flex;
+    margin-left: 260px;
+    font-size: 1rem;
+} */
 
 @keyframes App-logo-spin {
   from {
@@ -35,4 +49,54 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: auto;
+  }
+}
+
+@page {
+  size: landscape;
+  margin: 20mm;
+}
+
+table, td, th,tbody {
+  border: solid 1px #ddd;
+  border-collapse: collapse;
+  padding: 2px 3px;
+  text-align: center;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  align-items: center;
+  padding: 8;
+ 
+}
+td{
+  width: 250px;
+  align-items: center;
+  padding: 8;
+}
+
+th {
+  height: 100px;
+  align-items: center;
+  padding: 8;
+}
+
+.horizontalgap {
+  float: center;
+  overflow: hidden;
+  height: 1px;
+  width: 0px;
+
 }

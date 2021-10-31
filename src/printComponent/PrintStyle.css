@@ -1,0 +1,33 @@
+ @page{
+      margin-left: 10px;
+      margin-right: 10px;
+      size: landscape;
+      margin-top: 10px;
+      margin-bottom:10px;
+      }
+      
+  table, td, th,tbody {
+    border: solid 1px #ddd;
+    border-collapse: collapse;
+    padding: 2px 3px;
+    text-align: center;
+  }
+  
+  table {
+    border-collapse: collapse;
+   
+  }
+  td{
+    width: 250px;
+  }
+  
+  th {
+    height: 100px;
+  }
+  
+  .horizontalgap {
+    float: left;
+    overflow: hidden;
+    height: 1px;
+    width: 0px;
+  }

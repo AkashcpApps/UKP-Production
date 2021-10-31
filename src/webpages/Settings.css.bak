@@ -1,0 +1,19 @@
+.new-registraion-form-header {
+    border-style: solid;
+    height: 60px;
+    margin-top: 10px;
+    color: #f44366;
+    padding: 10px;
+}
+
+.new-registraion-form {
+    border-style: groove;
+}
+
+.new-registraion-form-role {
+    border-bottom-style: groove;
+    padding: 5px;
+    margin: 10px;
+    display: flex;
+}
+

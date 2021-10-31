@@ -1,0 +1,44 @@
+[
+  {
+    "SNO": 1,
+    "structureCode": "BK/BK_BAD/BK_BAD_1/103/A, 103/B, 103/C, 103/E",
+    "dateOfNotification": "22/09/2020",
+    "ownerName": "SRISMT 1Mallappa M Ganiger 2Sangappa M Ganiger 3Geeta Etc 4Jagadisha M Ganiger",
+    "createdOn": "22/09/2020 04:22 PM"
+  },
+  {
+    "SNO": 2,
+    "structureCode": "BK/BK_BAD/BK_BAD_1/Test1",
+    "dateOfNotification": "15/01/2021",
+    "ownerName": "Subbaiah",
+    "createdOn": "15/01/2021 11:06 AM"
+  },
+  {
+    "SNO": 3,
+    "structureCode": "BK/BK_BAG/BK_BAG_1/00002",
+    "dateOfNotification": "18/12/2014",
+    "ownerName": "sarigamapadanisa",
+    "createdOn": "18/12/2020 07:18 PM"
+  },
+  {
+    "SNO": 4,
+    "structureCode": "BK/BK_BAG/BK_BAG_5/1234",
+    "dateOfNotification": "23/07/2020",
+    "ownerName": "Subbaiah",
+    "createdOn": "23/07/2020 11:14 PM"
+  },
+  {
+    "SNO": 5,
+    "structureCode": "BK/BK_BIL/BK_BIL_48/1003",
+    "dateOfNotification": "30/04/2015",
+    "ownerName": "Lakshamappa b Maitri",
+    "createdOn": "17/08/2020 04:22 PM"
+  },
+  {
+    "SNO": 6,
+    "structureCode": "BK/BK_BIL/BK_BIL_48/1013",
+    "dateOfNotification": "30/04/2015",
+    "ownerName": "RAMAPPA T HALLI",
+    "createdOn": "11/08/2020 10:18 AM"
+  }
+]

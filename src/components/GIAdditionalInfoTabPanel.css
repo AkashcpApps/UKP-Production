@@ -1,0 +1,33 @@
+.add-new-element-dsr-label-form {
+    padding: 10px;
+    border-style: groove;
+    border-radius: 15px;
+}
+
+.add-new-element-main-form {
+    width: 100%;
+}
+
+.add-new-element-entry-input-form {
+    border-style: groove;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 5px;
+    height: 330px;
+}
+
+.add-new-text-entry-main-form {
+    border-style: groove;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 5px;
+    height: 280px;
+}
+
+.text-entry-main-form {
+    border-style: groove;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 5px;
+    height: 200px;
+}

@@ -1,0 +1,23 @@
+.dialog-title {
+    background: #3f51b5;
+    color: #ffffff;
+}
+
+.add-new-element-dsr-label-form {
+    padding: 10px;
+    border-style: groove;
+    margin: 5px;
+    border-radius: 15px;
+}
+
+.add-new-element-main-form {
+    width: 100%;
+}
+
+.add-new-element-input-form {
+    border-style: groove;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 5px;
+    height: 350px;
+}

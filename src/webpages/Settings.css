@@ -1,0 +1,22 @@
+.new-registraion-form-header {
+    border-style: groove;
+    border-radius: 15px;
+    height: 60px;
+    margin-top: 10px;
+    color: #0052B4;
+    padding: 10px;
+}
+
+.new-registraion-form {
+    border-style: groove;
+    border-radius: 15px;
+    box-shadow: 3px 3px;
+}
+
+.new-registraion-form-role {
+    border-bottom-style: groove;
+    padding: 5px;
+    margin: 10px;
+    display: flex;
+}
+

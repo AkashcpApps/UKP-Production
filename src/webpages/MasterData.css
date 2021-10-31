@@ -1,0 +1,16 @@
+
+.create-new-districst-form {
+    margin-left: 260px;
+    height: 50px;
+    padding: 5px;
+}
+
+.districts-data-grid {
+    margin-left: 260px;
+}
+
+.column-header {
+    height: 40px;
+    background: #0052B4;
+    color: #FFFFFF;
+}

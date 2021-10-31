@@ -1,0 +1,85 @@
+.upadate-gi-row {
+    margin-left: 45px;
+    height: 70px;
+}
+
+    .upadate-gi-row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+.upadate-gi-col-1 {
+    float: left;
+    width: 32%;
+    margin-top: 6px;
+}
+
+.upadate-gi-col-2 {
+    float: left;
+    width: 32%;
+    margin-top: 6px;
+}
+
+.upadate-gi-col-3 {
+    float: left;
+    width: 32%;
+    margin-top: 6px;
+}
+
+.upadate-gi-col-small {
+    float: left;
+    width: 25%;
+}
+.upadate-gi-col-small-1 {
+    float: left;
+    width: 19%;
+}
+.upadate-gi-col-small-2 {
+    float: left;
+    width: 25%;
+}
+
+.upadate-gi-col-remarks {
+    float: left;
+    margin-left: 15px;
+    margin-right: 30px;
+}
+
+.upadate-gi-row-small {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 70px;
+    margin-right: 30px;
+}
+
+
+.upadate-gi-col-small-button {
+    float: left;
+    width: 33%;
+}
+
+.upadate-gi-row-small:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.fixed-top-form {
+    border-style: groove;
+    padding: 10px;
+    padding-bottom: 20px;
+    border-radius: 15px;
+}
+
+.row-small-bottom-grid1 {
+    margin-left: 35px;
+    margin-right: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.row-small-bottom-grid2 {
+    margin-left: 35px;
+    margin-right: 40px;
+}

@@ -1,0 +1,16 @@
+.generalInformation {
+    display: flex;
+    margin-left: 260px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.generalInformationInputForm {
+    margin-left: 260px;
+    height: 50px;
+    padding: 5px;
+}
+
+.InformationDataGrid {
+    margin-left: 260px;
+}
