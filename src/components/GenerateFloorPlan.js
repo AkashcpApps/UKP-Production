@@ -24,8 +24,10 @@ class FloorPlan extends React.Component {
                 "GenInfoID": value,
             }
         }).then(res => {
-            //alert(res.data.structureElements.length)
-            this.state.drawingCoordinates = res.data;
+            //alert("res.data "+res.data.structureElements.length)
+         
+            this.state.drawingCoordinates = res.data.structureElements;
+            alert(this.state.drawingCoordinates.length)
            // alert( this.state.drawingCoordinates.structureElements.length+" "+value);
         })
             .catch(err => {
@@ -295,6 +297,8 @@ class FloorPlan extends React.Component {
         //var textEntries = drawingCoordinates.textEntry;
         var structureElements = this.state.drawingCoordinates.structureElements;
 
+       // alert('structureElements size '+structureElements.length)
+
         //textEntries.forEach((textEntry) => {
 
         //});
@@ -302,8 +306,13 @@ class FloorPlan extends React.Component {
         var superStructureElements = [];
         var superStructureElementCount = 0;
 
+      //  var structureElements=this.state.drawingCoordinates;
+
         if (structureElements != null && structureElements != undefined && structureElements.length > 0) {
             structureElements.forEach((elements) => {
+
+                let str="mainLabel "+elements.mainLabel+"\n"+" subLabel"+elements.subLabel+"\n "+" orientation"+elements.orientation+"\n xAxis"+elements.xAxis+"\n yAxis"+elements.yAxis+"\n length"+elements.elements+"\n breadth "+elements.breadth+"\n height"+elements.height+"\n circumference "+elements.height;
+                alert(str);
 
                 var elementWidth = scaleConstWidthInPx;
                 var elementlength = elements.length;
