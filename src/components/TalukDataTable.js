@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import * as Constants from '../utils/Constants';
+import AddIcon from '@material-ui/icons/Refresh';
+import Button from '@material-ui/core/Button';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 import './DataTable.css';
@@ -47,6 +51,27 @@ export default function DataTable() {
     const [pageSize, setPageSize] = React.useState(30);
     const [rows, setRows] = React.useState([]);
 
+    const RefreshPage=()=>{
+        toast.info("Refresh")
+        axios.get(src)
+        .then(function (response) {
+           setRows(response.data.mDistList);
+        })
+        .catch(function (error) {
+            if (error.response) {
+                alert(error.response.data);
+                alert(error.response.status);
+                alert(error.response.headers);
+            } else if (error.request) {
+                alert("Error Request: " + error.request);
+                alert('Error: ' + error.message);
+            } else {
+                alert('Error: ' + error.message);
+            }
+        });
+
+    }
+
     useEffect(() => {
         /* fetch(`http://ff46-103-98-78-198.ngrok.io/UKP/rest/endpoints/GetAllDistrict`)
              .then(response => {
@@ -77,6 +102,24 @@ export default function DataTable() {
      }, []);
 
     return (
+        <>
+         <div>
+            <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddIcon />}
+                style={{
+                    float: 'right',
+                    marginRight:6
+                    
+                }}
+                onClick={RefreshPage}>
+                Refresh
+            </Button>
+
+            </div>
+            <br/>
+            <br/>
         <div style={{ height: 500, width: '100%' }}>
             <DataGrid
               getRowId={(r) => r.ID}
@@ -90,5 +133,7 @@ export default function DataTable() {
                 disableSelectionOnClick
             />
         </div>
+        <ToastContainer/>
+        </>
     );
 }

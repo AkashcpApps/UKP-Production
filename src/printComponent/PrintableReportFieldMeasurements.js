@@ -63,7 +63,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
             </strong>
           </p>
           <p align="center">
-          -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
         </div>
 
@@ -89,15 +89,15 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
 
         <table>
           <thead>
-            <th align="center">Name of Owner or Anubhavadhar</th>
-            <th align="center">VPC/UKP No</th>
-            <th align="center">BuildUp Area in Sqm</th>
-            <th align="center">OpenArea in Sqm</th>
-            <th align="center">Total Area In Sqm</th>
-            <th align="center">Estimated Amount In Rs</th>
-            <th align="center">Age of Structure In Years</th>
-            <th align="center">Depreciation % age and amount</th>
-            <th align="center">Net Amount Payable In Rs.</th>
+          <th align="center"><center>Name of Owner or Anubhavadhar</center></th>
+            <th align="center"><center>VPC/UKP No</center></th>
+            <th align="center"><center>BuildUp Area in Sqm</center></th>
+            <th align="center"><center>OpenArea in Sqm</center></th>
+            <th align="center"><center>Total Area In Sqm</center></th>
+            <th align="center"><center>Estimated Amount In Rs</center></th>
+            <th align="center"><center>Age of Structure In Years</center></th>
+            <th align="center"><center>Depreciation % age and amount</center></th>
+            <th align="center"><center>Net Amount Payable In Rs.</center></th>
           </thead>
           <tbody id="myTable">
             <tr>
@@ -113,32 +113,33 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
             </tr>
           </tbody>
         </table>
+        <br/>
         <p align="left">
           Struture Type:{" "}
           <strong>{this.state.mGenInfoReport.StrutureTypeName}</strong>
         </p>
         <p>Remarks:</p>
         <p align="center">
-          -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
           <p align="center">
-          -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
         <table>
           <thead>
-            <th align="center">Main Label</th>
-            <th align="center">Sub Label</th>
-            <th align="center">Description</th>
-            <th align="center">X</th>
-            <th align="center">Y</th>
-            <th align="center">Length</th>
-            <th align="center">Breadth / Width</th>
-            <th align="center">Height / Depth</th>
-            <th align="center">Circu Diameter</th>
-            <th align="center">Number of Item</th>
-            <th align="center">UOM</th>
-            <th align="center">Volume</th>
-            <th align="center">Area</th>
+            <th align="center"><center>Main Label</center></th>
+            <th align="center"><center>Sub Label</center></th>
+            <th align="center"><center>Description</center></th>
+            <th align="center"><center>X</center></th>
+            <th align="center"><center>Y</center></th>
+            <th align="center"><center>Length</center></th>
+            <th align="center"><center>Breadth / Width</center></th>
+            <th align="center"><center>Height / Depth</center></th>
+            <th align="center"><center>Circu Diameter</center></th>
+            <th align="center"><center>Number of Item</center></th>
+            <th align="center"><center>UOM</center></th>
+            <th align="center"><center>Volume</center></th>
+            <th align="center"><center>Area</center></th>
           </thead>
           <tbody id="myTable">
             {this.state.FmList.map((item, index) => (
@@ -171,7 +172,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
           </tr>
         </table>
         <p align="center">
-          ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
         {/* <ol>
           <li>

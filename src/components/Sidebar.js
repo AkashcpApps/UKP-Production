@@ -10,7 +10,7 @@ import { IconContext } from "react-icons/lib";
 import logo from '../images/karnataka-govt-logo.png';
 
 const Nav = styled.div`
-  background: #043e69;
+  background: #3F51B5;
   height: 80px;
   display: flex;
   justify-content: flex-start;
@@ -27,7 +27,7 @@ const NavIcon = styled(Link)`
 `;
   
 const SidebarNav = styled.nav`
-  background: #043e69;
+  background: #3F51B5;
   width: 250px;
   height: 100vh;
   display: flex;

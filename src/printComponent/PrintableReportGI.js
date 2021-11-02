@@ -49,7 +49,7 @@ class PrintableReportGI extends React.PureComponent {
             GENERAL ABSTRACT OF STRUCTURE VALUATION
           </p>
           <p align="center">
-          ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
         </div>
         <div>
@@ -74,15 +74,15 @@ class PrintableReportGI extends React.PureComponent {
 
         <table>
           <thead>
-            <th align="center">Name of Owner or Anubhavadhar</th>
-            <th align="center">VPC/UKP No</th>
-            <th align="center">BuildUp Area in Sqm</th>
-            <th align="center">OpenArea in Sqm</th>
-            <th align="center">Total Area In Sqm</th>
-            <th align="center">Estimated Amount In Rs</th>
-            <th align="center">Age of Structure In Years</th>
-            <th align="center">Depreciation % age and amount</th>
-            <th align="center">Net Amount Payable In Rs.</th>
+            <th align="center"><center>Name of Owner or Anubhavadhar</center></th>
+            <th align="center"><center>VPC/UKP No</center></th>
+            <th align="center"><center>BuildUp Area in Sqm</center></th>
+            <th align="center"><center>OpenArea in Sqm</center></th>
+            <th align="center"><center>Total Area In Sqm</center></th>
+            <th align="center"><center>Estimated Amount In Rs</center></th>
+            <th align="center"><center>Age of Structure In Years</center></th>
+            <th align="center"><center>Depreciation % age and amount</center></th>
+            <th align="center"><center>Net Amount Payable In Rs.</center></th>
           </thead>
           <tbody id="myTable">
             <tr>
@@ -91,13 +91,14 @@ class PrintableReportGI extends React.PureComponent {
               <td>{this.state.mGenInfoReport.TotalBuiltUpArea}</td>
               <td>{this.state.mGenInfoReport.OpenArea}</td>
               <td>{this.state.mGenInfoReport.TotalArea}</td>
-              <td>{this.state.mGenInfoReport.TotalBuiltUpArea}</td>
+              <td>{this.state.mGenInfoReport.TotalAmount}</td>
               <td>{this.state.mGenInfoReport.AgeOfStructure}</td>
               <td>{this.state.mGenInfoReport.Depreciation}</td>
               <td>{this.state.mGenInfoReport.TotalAmount}</td>
             </tr>
           </tbody>
         </table>
+        <br/>
         <p align="left">
           Struture Type:{" "}
           <strong>{this.state.mGenInfoReport.StrutureTypeName}</strong>
@@ -105,7 +106,7 @@ class PrintableReportGI extends React.PureComponent {
         <p>Remarks:</p>
 
         <p align="center">
-          ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
         <ol>
           <li>

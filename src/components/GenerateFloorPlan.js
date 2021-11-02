@@ -1,8 +1,37 @@
 import React, { Component, useEffect } from 'react'
 import Box from '@material-ui/core/Box';
+import axios from 'axios';
+import * as Constants from '../utils/Constants';
 
 class FloorPlan extends React.Component {
+    
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            drawingCoordinates: {}
+        }
+    };
+
+  
     componentDidMount() {
+       // alert("generalInfoID->"+generalInfoID);
+       //alert("generalInfoID->* "+this.props.generalInfoID)
+       let value=this.props.generalInfoID;
+        axios.get(Constants.url + "UKP/rest/endpoints/GetFloorElements", {
+            params: {
+                "GenInfoID": value,
+            }
+        }).then(res => {
+            //alert(res.data.structureElements.length)
+            this.state.drawingCoordinates = res.data;
+           // alert( this.state.drawingCoordinates.structureElements.length+" "+value);
+        })
+            .catch(err => {
+                alert("Error " + err);
+            });
+
         this.updateCanvas();
     }
     updateCanvas() {
@@ -10,9 +39,9 @@ class FloorPlan extends React.Component {
         var headerY = 80;
         var columnlength = 400;
         var columnWidth = 80;
-        var ownerName = "Mokshagondam Visvesvaraya";
-        var vpcNo = "123";
-        var structureCode = "BK/BK_BIL/BK_BIL_48/123";
+        var ownerName = this.props.ownerName;
+        var vpcNo = this.props.structureCode.split("/")[this.props.structureCode.split("/").length - 1];
+        var structureCode = this.props.structureCode;
 
         var scaleConstLengthInPx = 60;
         var scaleConstWidthInPx = 60;
@@ -263,155 +292,176 @@ class FloorPlan extends React.Component {
                 }
             ]
         };
-        var textEntries = drawingCoordinates.textEntry;
-        var structureElements = drawingCoordinates.structureElements;
+        //var textEntries = drawingCoordinates.textEntry;
+        var structureElements = this.state.drawingCoordinates.structureElements;
 
-        textEntries.forEach((textEntry) => {
+        //textEntries.forEach((textEntry) => {
 
-        });
+        //});
 
         var superStructureElements = [];
         var superStructureElementCount = 0;
 
-        structureElements.forEach((elements) => {
+        if (structureElements != null && structureElements != undefined && structureElements.length > 0) {
+            structureElements.forEach((elements) => {
 
-            var elementWidth = scaleConstWidthInPx;
-            var elementlength = elements.length;
-            var elementXAxis = x;
-            var elementYAxis = y;
-            var superStructureJSONString;
-            var superStructureJSONObj;
+                var elementWidth = scaleConstWidthInPx;
+                var elementlength = elements.length;
+                var elementXAxis = x;
+                var elementYAxis = y;
+                var superStructureJSONString;
+                var superStructureJSONObj;
 
-            //updateScaleConstInPx(elementlength);
-            //updateScaleWidthConstInPx(elements.breadth);
-            if (elements.mainLabel == elements.subLabel) {
-
-                elementWidth = elements.breadth * scaleConstWidthInPx;
-
-                if (elements.orientation == "H") {
-                    if (elements.xAxis > 0.00) {
-                        elementXAxis = elementXAxis + (elements.xAxis * scaleConstLengthInPx);
-                    }
-                    if (elements.yAxis > 0.00) {
-                        elementYAxis = elementYAxis - (elements.yAxis * scaleConstLengthInPx);
-                    }
-                    //alert ("elements.mainLabel: " + elements.mainLabel + "\nelementXAxis: " + elementXAxis + "\nelementYAxis: " + elementYAxis + "\nelementlength*scaleConstLengthInPx: " + elementlength*scaleConstLengthInPx + "\nelementWidth: " + elementWidth);
-                    ctx.beginPath();
-                    ctx.rect(elementXAxis, elementYAxis, elementlength * scaleConstLengthInPx, elementWidth);
-                    ctx.stroke();
-                    ctx.save();
-                    ctx.restore();
-                    ctx.fillText(elements.mainLabel + "(" + elements.length + " * " + elements.breadth + ")", elementXAxis - 30 + ((elementlength * scaleConstLengthInPx) / 2), ((elementWidth / 2) + elementYAxis) - 20);
-                    ctx.stroke();
-                    ctx.save();
-                    ctx.restore();
-                } else if (elements.orientation == "V") {
-                    if (elements.xAxis > 0.00) {
-                        elementXAxis = elementXAxis + elements.xAxis * scaleConstLengthInPx;
-                    }
-                    if (elements.yAxis > 0.00) {
-                        elementYAxis = elementYAxis - (elements.yAxis * scaleConstLengthInPx);
-                    }
-                    //alert ("elements.mainLabel: " + elements.mainLabel + "\nelementXAxis: " + elementXAxis + "\nelementYAxis: " + elementYAxis + "\nelementlength*scaleConstLengthInPx: " + elementlength*scaleConstLengthInPx + "\nelementWidth: " + elementWidth);
-                    ctx.beginPath();
-                    ctx.rect(elementXAxis, elementYAxis, elementWidth, (elementlength * scaleConstLengthInPx));
-                    ctx.stroke();
-                    ctx.save();
-                    ctx.restore();
-                    ctx.fillText(elements.mainLabel, elementXAxis, (elementYAxis + ((elementlength * scaleConstLengthInPx) / 2)));
-                    ctx.stroke();
-                    ctx.save();
-                    ctx.restore();
+                if (elements.xAxis == 9999.0) {
+                    elements.xAxis = "";
                 }
 
-                superStructureJSONString = '{"superStructureElementName" : "' + elements.mainLabel + '", "orientation": "' + elements.orientation + '", "xAxis": ' + elementXAxis + ', "yAxis": ' + elementYAxis + ',"lengthInPx": ' + elementlength * scaleConstLengthInPx + ',"widthInPx": ' + elementWidth + '}';
-                superStructureJSONObj = JSON.parse(superStructureJSONString);
-                superStructureElements.push(superStructureJSONObj);
-            }
-        });
+                if (elements.yAxis == 9999.0) {
+                    elements.yAxis = "";
+                }
 
-        structureElements.forEach((elements) => {
+                if (elements.length == 9999.0) {
+                    elements.length = "";
+                }
 
-            if (elements.mainLabel != elements.subLabel) {
+                if (elements.breadth == 9999.0) {
+                    elements.breadth = "";
+                }
+                if (elements.height == 9999.0) {
+                    elements.height = "";
+                }
+                
+                //updateScaleConstInPx(elementlength);
+                //updateScaleWidthConstInPx(elements.breadth);
+                if (elements.mainLabel == elements.subLabel) {
 
-                for (var i = 0; i < superStructureElements.length; i++) {
-                    if (superStructureElements[i].superStructureElementName == elements.mainLabel) {
-                        if (superStructureElements[i].subElementsCount == undefined || superStructureElements[i].subElementsCount == 0) {
-                            superStructureElements[i].subElementsCount = 1;
-                        } else {
-                            superStructureElements[i].subElementsCount += 1;
+                    elementWidth = elements.breadth * scaleConstWidthInPx;
+
+                    if (elements.orientation == "H") {
+                        if (elements.xAxis > 0.00) {
+                            elementXAxis = elementXAxis + (elements.xAxis * scaleConstLengthInPx);
                         }
+                        if (elements.yAxis > 0.00) {
+                            elementYAxis = elementYAxis - (elements.yAxis * scaleConstLengthInPx);
+                        }
+                        //alert ("elements.mainLabel: " + elements.mainLabel + "\nelementXAxis: " + elementXAxis + "\nelementYAxis: " + elementYAxis + "\nelementlength*scaleConstLengthInPx: " + elementlength*scaleConstLengthInPx + "\nelementWidth: " + elementWidth);
+                        ctx.beginPath();
+                        ctx.rect(elementXAxis, elementYAxis, elementlength * scaleConstLengthInPx, elementWidth);
+                        ctx.stroke();
+                        ctx.save();
+                        ctx.restore();
+                        ctx.fillText(elements.mainLabel + "(" + elements.length + " * " + elements.breadth + ")", elementXAxis - 30 + ((elementlength * scaleConstLengthInPx) / 2), ((elementWidth / 2) + elementYAxis) - 20);
+                        ctx.stroke();
+                        ctx.save();
+                        ctx.restore();
+                    } else if (elements.orientation == "V") {
+                        if (elements.xAxis > 0.00) {
+                            elementXAxis = elementXAxis + elements.xAxis * scaleConstLengthInPx;
+                        }
+                        if (elements.yAxis > 0.00) {
+                            elementYAxis = elementYAxis - (elements.yAxis * scaleConstLengthInPx);
+                        }
+                        //alert ("elements.mainLabel: " + elements.mainLabel + "\nelementXAxis: " + elementXAxis + "\nelementYAxis: " + elementYAxis + "\nelementlength*scaleConstLengthInPx: " + elementlength*scaleConstLengthInPx + "\nelementWidth: " + elementWidth);
+                        ctx.beginPath();
+                        ctx.rect(elementXAxis, elementYAxis, elementWidth, (elementlength * scaleConstLengthInPx));
+                        ctx.stroke();
+                        ctx.save();
+                        ctx.restore();
+                        ctx.fillText(elements.mainLabel, elementXAxis, (elementYAxis + ((elementlength * scaleConstLengthInPx) / 2)));
+                        ctx.stroke();
+                        ctx.save();
+                        ctx.restore();
+                    }
 
-                        if (superStructureElements[i].orientation == "H") {
-                            var subElementWidth = elements.breadth * scaleConstLengthInPx;
-                            var subElementLength = superStructureElements[i].widthInPx;
-                            var subElementXAxis = superStructureElements[i].xAxis + superStructureElements[i].lengthInPx - subElementWidth - 20;
+                    superStructureJSONString = '{"superStructureElementName" : "' + elements.mainLabel + '", "orientation": "' + elements.orientation + '", "xAxis": ' + elementXAxis + ', "yAxis": ' + elementYAxis + ',"lengthInPx": ' + elementlength * scaleConstLengthInPx + ',"widthInPx": ' + elementWidth + '}';
+                    superStructureJSONObj = JSON.parse(superStructureJSONString);
+                    superStructureElements.push(superStructureJSONObj);
+                }
+            });
+        
+            structureElements.forEach((elements) => {
 
+                if (elements.mainLabel != elements.subLabel) {
 
-                            switch (superStructureElements[i].subElementsCount) {
-                                case 1:
-                                    subElementXAxis = superStructureElements[i].xAxis + superStructureElements[i].lengthInPx - subElementWidth - 20;
-                                    break;
-                                case 2:
-                                    subElementXAxis = superStructureElements[i].xAxis + 20;
-                                    break;
-                                case 3:
-                                    subElementXAxis = superStructureElements[i].xAxis + (superStructureElements[i].lengthInPx / 2);
-                                    break;
-                            }
-
-                            ctx.beginPath();
-                            ctx.rect(subElementXAxis, superStructureElements[i].yAxis, subElementWidth, subElementLength);
-                            var windowRegEx = /W[0-9]+/g;
-                            if (elements.subLabel.match(windowRegEx)) {
-                                ctx.rect(subElementXAxis, ((superStructureElements[i].yAxis + (subElementLength / 2)) - 5), subElementWidth, 5);
-                            }
-                            ctx.stroke();
-                            ctx.save();
-                            ctx.restore();
-                            ctx.fillText(elements.subLabel, subElementXAxis + (subElementWidth / 2) - 10, superStructureElements[i].yAxis + 10);
-                            ctx.stroke();
-                            ctx.save();
-                            ctx.restore();
-                        } else if (superStructureElements[i].orientation == "V") {
-                            var subElementWidth = superStructureElements[i].widthInPx;
-                            var subElementLength = elements.length * scaleConstLengthInPx;
-                            var subElementYAxis = superStructureElements[i].yAxis + superStructureElements[i].lengthInPx - subElementLength - 20;
-
-
-                            switch (superStructureElements[i].subElementsCount) {
-                                case 1:
-                                    subElementYAxis = superStructureElements[i].yAxis + superStructureElements[i].lengthInPx - subElementLength - 20;
-                                    break;
-                                case 2:
-                                    subElementYAxis = superStructureElements[i].yAxis + 20;
-                                    break;
-                                case 3:
-                                    subElementYAxis = superStructureElements[i].yAxis + (superStructureElements[i].lengthInPx / 2);
-                                    break;
-                            }
-                            ctx.beginPath();
-                            var cupboardRegEx = /CB[0-9]+/g;
-                            if (elements.subLabel.match(cupboardRegEx)) {
-                                ctx.rect(superStructureElements[i].xAxis + 10, subElementYAxis - 30, subElementWidth - 10, subElementLength);
-                                ctx.fillText(elements.subLabel, superStructureElements[i].xAxis, (subElementYAxis + (subElementLength / 2)) - 30);
+                    for (var i = 0; i < superStructureElements.length; i++) {
+                        if (superStructureElements[i].superStructureElementName == elements.mainLabel) {
+                            if (superStructureElements[i].subElementsCount == undefined || superStructureElements[i].subElementsCount == 0) {
+                                superStructureElements[i].subElementsCount = 1;
                             } else {
-                                ctx.rect(superStructureElements[i].xAxis, subElementYAxis, subElementWidth, subElementLength);
-                                ctx.fillText(elements.subLabel, superStructureElements[i].xAxis, (subElementYAxis + (subElementLength / 2)));
-                            }
-                            var windowRegEx = /W[0-9]+/g;
-                            if (elements.subLabel.match(windowRegEx)) {
-                                ctx.rect(superStructureElements[i].xAxis + (subElementWidth / 2) - 3, subElementYAxis, 5, subElementLength);
+                                superStructureElements[i].subElementsCount += 1;
                             }
 
-                            ctx.stroke();
-                            ctx.save();
-                            ctx.restore();
+                            if (superStructureElements[i].orientation == "H") {
+                                var subElementWidth = elements.breadth * scaleConstLengthInPx;
+                                var subElementLength = superStructureElements[i].widthInPx;
+                                var subElementXAxis = superStructureElements[i].xAxis + superStructureElements[i].lengthInPx - subElementWidth - 20;
+
+
+                                switch (superStructureElements[i].subElementsCount) {
+                                    case 1:
+                                        subElementXAxis = superStructureElements[i].xAxis + superStructureElements[i].lengthInPx - subElementWidth - 20;
+                                        break;
+                                    case 2:
+                                        subElementXAxis = superStructureElements[i].xAxis + 20;
+                                        break;
+                                    case 3:
+                                        subElementXAxis = superStructureElements[i].xAxis + (superStructureElements[i].lengthInPx / 2);
+                                        break;
+                                }
+
+                                ctx.beginPath();
+                                ctx.rect(subElementXAxis, superStructureElements[i].yAxis, subElementWidth, subElementLength);
+                                var windowRegEx = /W[0-9]+/g;
+                                if (elements.subLabel.match(windowRegEx)) {
+                                    ctx.rect(subElementXAxis, ((superStructureElements[i].yAxis + (subElementLength / 2)) - 5), subElementWidth, 5);
+                                }
+                                ctx.stroke();
+                                ctx.save();
+                                ctx.restore();
+                                ctx.fillText(elements.subLabel, subElementXAxis + (subElementWidth / 2) - 10, superStructureElements[i].yAxis + 10);
+                                ctx.stroke();
+                                ctx.save();
+                                ctx.restore();
+                            } else if (superStructureElements[i].orientation == "V") {
+                                var subElementWidth = superStructureElements[i].widthInPx;
+                                var subElementLength = elements.length * scaleConstLengthInPx;
+                                var subElementYAxis = superStructureElements[i].yAxis + superStructureElements[i].lengthInPx - subElementLength - 20;
+
+
+                                switch (superStructureElements[i].subElementsCount) {
+                                    case 1:
+                                        subElementYAxis = superStructureElements[i].yAxis + superStructureElements[i].lengthInPx - subElementLength - 20;
+                                        break;
+                                    case 2:
+                                        subElementYAxis = superStructureElements[i].yAxis + 20;
+                                        break;
+                                    case 3:
+                                        subElementYAxis = superStructureElements[i].yAxis + (superStructureElements[i].lengthInPx / 2);
+                                        break;
+                                }
+                                ctx.beginPath();
+                                var cupboardRegEx = /CB[0-9]+/g;
+                                if (elements.subLabel.match(cupboardRegEx)) {
+                                    ctx.rect(superStructureElements[i].xAxis + 10, subElementYAxis - 30, subElementWidth - 10, subElementLength);
+                                    ctx.fillText(elements.subLabel, superStructureElements[i].xAxis, (subElementYAxis + (subElementLength / 2)) - 30);
+                                } else {
+                                    ctx.rect(superStructureElements[i].xAxis, subElementYAxis, subElementWidth, subElementLength);
+                                    ctx.fillText(elements.subLabel, superStructureElements[i].xAxis, (subElementYAxis + (subElementLength / 2)));
+                                }
+                                var windowRegEx = /W[0-9]+/g;
+                                if (elements.subLabel.match(windowRegEx)) {
+                                    ctx.rect(superStructureElements[i].xAxis + (subElementWidth / 2) - 3, subElementYAxis, 5, subElementLength);
+                                }
+
+                                ctx.stroke();
+                                ctx.save();
+                                ctx.restore();
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     }
     render() {
         return (

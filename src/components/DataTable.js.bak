@@ -138,11 +138,9 @@ export default function DataTable() {
     const RefreshPage=()=>{
         console.log("Refresh");
         toast.info("Refresh");
-      //  setRows([]);
         
         axios.get(Constants.url+'UKP/rest/endpoints/GetAllGenInfoV2')
         .then(function (response) {
-            setRows([]);
            setRows(response.data.mGenInfoReportModel);
         })
         .catch(function (error) {
@@ -165,7 +163,6 @@ export default function DataTable() {
     const handleCellDoubleClick = (params, event) => {
        // alert(event + " $$$ " + params.row.ID);
        localStorage.removeItem('dsrid');
-        localStorage.removeItem('generalInfoID');
        setrowID(params.row.ID);
         setOpen(true);
     };

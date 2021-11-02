@@ -9,20 +9,25 @@
   table, td, th,tbody {
     border: solid 1px #ddd;
     border-collapse: collapse;
+    align-items: center;
     padding: 2px 3px;
-    text-align: center;
   }
   
   table {
     border-collapse: collapse;
+    
    
   }
   td{
     width: 250px;
+    font-size: 10px;
+   
   }
   
   th {
-    height: 100px;
+    height: 50px;
+    font-size: 12px;
+ 
   }
   
   .horizontalgap {

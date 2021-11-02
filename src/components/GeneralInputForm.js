@@ -10,6 +10,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import AddIcon from '@material-ui/icons/Add';
 import GIInputFormContainer from './GIInputFormContainer';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,8 +57,7 @@ export default function GeneralInputForm() {
                     float: 'left',
                     top: '3px'
                 }}
-                onClick={handleClickOpen}
-            >
+                onClick={handleClickOpen}>
                 New General Information
             </Button>
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -77,6 +78,7 @@ export default function GeneralInputForm() {
                     <GIInputFormContainer refresh={refresh}/>
                 </div>
             </Dialog>
+            <ToastContainer/>
         </div>
     );
 }

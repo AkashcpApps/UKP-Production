@@ -10,9 +10,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import AddIcon from '@material-ui/icons/Refresh';
+
 import Snackbar from '@material-ui/core/Snackbar';
 import DSREditFormContainer from './DSREditFormContainer';
 import './DataTable.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const axios = require('axios');
 const src=Constants.url+'UKP/rest/endpoints/GetDsr';
@@ -64,13 +68,31 @@ export default function DataTable() {
     const [rows, setRows] = React.useState([]);
      const [open, setOpen] = React.useState(false);
  const classes = useStyles();
+
+ const RefreshPage=()=>{
+    toast.info("Refresh")
+    axios.get(src)
+    .then(function (response) {
+       // setRows(response.data)
+       setRows(response.data.mDistList);
+       // alert( "Success: " + response.data);
+    })
+    .catch(function (error) {
+        if (error.response) {
+            alert(error.response.data);
+            alert(error.response.status);
+            alert(error.response.headers);
+        } else if (error.request) {
+            alert("Error Request: " + error.request);
+            alert('Error: ' + error.message);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            alert('Error: ' + error.message);
+        }
+    });
+
+ };
     useEffect(() => {
-        /* fetch(`http://ff46-103-98-78-198.ngrok.io/UKP/rest/endpoints/GetAllDistrict`)
-             .then(response => {
-                 alert(response.data);
-                 setRows(response.data.mDistList);
-             })
-             .catch(error => alert('Error: ' + error)); */
          // GET request using fetch with error handling
          axios.get(src)
              .then(function (response) {
@@ -110,6 +132,25 @@ const handleCellDoubleClick = (params, event) => {
         setOpen(false);
     };
     return (
+        <>
+         <div>
+            <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddIcon />}
+                style={{
+                    float: 'right',
+                    marginRight:6
+                    
+                }}
+                onClick={RefreshPage}>
+                Refresh
+            </Button>
+
+            </div>
+            <br/>
+            <br/>
+
         <div style={{ height: 500, width: '100%' }}>
             <DataGrid
              getRowId={(r) => r.ID}
@@ -145,6 +186,8 @@ const handleCellDoubleClick = (params, event) => {
                 </Dialog>
             </div>
         </div>
+        <ToastContainer/>
+        </>
       
     );
 }

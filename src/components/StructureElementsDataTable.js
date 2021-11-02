@@ -2,8 +2,11 @@ import React, { useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import * as Constants from '../utils/Constants';
 import { makeStyles } from '@material-ui/core/styles'
-
+import AddIcon from '@material-ui/icons/Refresh';
+import Button from '@material-ui/core/Button';
 import './DataTable.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const axios = require('axios');
 
 const src = Constants.url+'UKP/rest/endpoints/GetStrElement';
@@ -79,6 +82,34 @@ export default function DataTable() {
     const [pageSize, setPageSize] = React.useState(10);
     const [rows, setRows] = React.useState([]);
 
+    const RefreshPage=()=>{
+        toast.info("Resfresh");
+        axios.get(Constants.url+'UKP/rest/endpoints/GetStrElement')
+        .then(function (response) {
+           // setRows(response.data)
+
+           let value=response.data.mStrElementList;
+           findAndReplace(value,1 ,"Yes");
+           findAndReplace(value,0 ,"No");
+           setRows(value);
+          
+        })
+        .catch(function (error) {
+            if (error.response) {
+                alert(error.response.data);
+                alert(error.response.status);
+                alert(error.response.headers);
+            } else if (error.request) {
+                alert("Error Request: " + error.request);
+                alert('Error: ' + error.message);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                alert('Error: ' + error.message);
+            }
+        });
+
+    }
+
     
     useEffect(() => {
          axios.get(Constants.url+'UKP/rest/endpoints/GetStrElement')
@@ -107,6 +138,24 @@ export default function DataTable() {
      }, []);
 
     return (
+        <>
+         <div>
+            <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddIcon />}
+                style={{
+                    float: 'right',
+                    marginRight:6
+                    
+                }}
+                onClick={RefreshPage}>
+                Refresh
+            </Button>
+
+            </div>
+            <br/>
+            <br/>
         <div style={{ height: 500, width: '100%' }}>
             <DataGrid
                  getRowId={(r) => r.ID}
@@ -120,6 +169,8 @@ export default function DataTable() {
                 disableSelectionOnClick
             />
         </div>
+        <ToastContainer/>
+        </>
     );
 }
 

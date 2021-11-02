@@ -115,8 +115,8 @@ export default function GIInputFormContainer(params) {
             setReferenceNumber(response.data.mGenInfoReport.Reference)
             setDSR(response.data.mGenInfoReport.dsrCode);
             setdsrid(response.data.mGenInfoReport.DsrID);
-              localStorage.setItem('dsrid', response.data.mGenInfoReport.DsrID);
-              localStorage.setItem('generalInfoID', params.value);
+            localStorage.removeItem('dsrid');
+            localStorage.setItem('dsrid', response.data.mGenInfoReport.DsrID)
 
          //  alert("dsrid "+dsrid+" "+response.data.mGenInfoReport.DsrID);
           
@@ -322,16 +322,12 @@ export default function GIInputFormContainer(params) {
                                         <CloseIcon />
                                     </IconButton>
                                     <Typography variant="h6" className={classes.title}>
-                                        Floor Plan For - {ownerName}
+                                        Floor Plan For - 
                                     </Typography>
                                 </Toolbar>
                             </AppBar>
                             <div>
-                                {
-                                   // alert("generalInfoID-> "+generalInfoID)
-
-                                }
-                                <FloorPlan generalInfoID={generalInfoID} structureCode={structureCode} ownerName={ownerName} />
+                                <FloorPlan />
                             </div>
                         </Dialog>
                     </div>
@@ -343,7 +339,7 @@ export default function GIInputFormContainer(params) {
                                         <CloseIcon />
                                     </IconButton>
                                     <Typography variant="h6" className={classes.title}>
-                                        General Information Report For - {ownerName}
+                                        General Information Report For - 
                                     </Typography>
                                 </Toolbar>
                             </AppBar>
@@ -360,7 +356,7 @@ export default function GIInputFormContainer(params) {
                                         <CloseIcon />
                                     </IconButton>
                                     <Typography variant="h6" className={classes.title}>
-                                        Field Measurements For - {ownerName}
+                                        Field Measurements For - 
                                     </Typography>
                                 </Toolbar>
                             </AppBar>

@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 
 import * as Constants from '../utils/Constants';
+import AddIcon from '@material-ui/icons/Refresh';
+import Button from '@material-ui/core/Button';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 import './DataTable.css';
@@ -90,6 +94,34 @@ export default function DataTable() {
              });
      }, []);
 
+     const RefreshPage=()=>{
+         toast.info("Resfresh")
+        axios.get(Constants.url+'UKP/rest/endpoints/GetVillageByTaluk',{
+            params:{
+               "TID":"FCB14B93-4F7C-431B-8475-8F6827AB6DCA"
+            }
+        })
+            .then(function (response) {
+               // setRows(response.data)
+               setRows(response.data.mVillageList);
+               // alert( "Success: " + response.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                    alert(error.response.status);
+                    alert(error.response.headers);
+                } else if (error.request) {
+                    alert("Error Request: " + error.request);
+                    alert('Error: ' + error.message);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                   // alert('Error: ' + error.message);
+                }
+            });
+
+     }
+
 
      const reFresh=()=>{
        
@@ -123,6 +155,24 @@ export default function DataTable() {
 
 
     return (
+        <>
+          <div>
+            <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddIcon />}
+                style={{
+                    float: 'right',
+                    marginRight:6
+                    
+                }}
+                onClick={RefreshPage}>
+                Refresh
+            </Button>
+
+            </div>
+            <br/>
+            <br/>
         <div style={{ height: 500, width: '100%' }}>
             <DataGrid
              getRowId={(r) => r.ID}
@@ -136,5 +186,7 @@ export default function DataTable() {
                 disableSelectionOnClick
             />
         </div>
+        <ToastContainer/>
+        </>
     );
 }

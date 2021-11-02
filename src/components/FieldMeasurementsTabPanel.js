@@ -21,6 +21,8 @@ import Tooltip from "@mui/material/Tooltip";
 import * as Constants from "../utils/Constants";
 import GIElementDataTable from "./GIElementDataTable";
 import "./GIAdditionalInfoTabPanel.css";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import  TextareaAutosize  from "@material-ui/core";
 const axios = require("axios");
 
@@ -43,11 +45,12 @@ export default function FieldMeasurementsPanel(props) {
     // let gridInfoID = localStorage.getItem('id');
     // alert("FieldMeasurement "+props.GeneralInfoID);
     const classes = useStyles();
-    const [dsrid, setdsrid] = React.useState('');
-   
+
     let DSRID = localStorage.getItem('dsrid');
+    let generalInfoID = localStorage.getItem('generalInfoID');
 
     const [open, setOpen] = React.useState(false);
+    const [dsrid, setdsrid] = React.useState('');
     const [labelType, setLabelType] = React.useState([]);
     const [mainLabel, setMainLabel] = React.useState([]);
     const [mainLabel1Value, setMainLabel1Value] = React.useState("");
@@ -57,109 +60,105 @@ export default function FieldMeasurementsPanel(props) {
     const [orderType, setOrderType] = React.useState("");
     const [description, setDescription] = React.useState("");
     const [orientation, setOrientation] = React.useState("");
+    const [xAxis, setXAxis] = React.useState(9999);
+    const [yAxis, setYAxis] = React.useState(9999);
+    const [circumference, setCircumference] = React.useState(9999);
     const [inputDisabled, setInputDisabled] = React.useState(false);
     const [structureType, setStructureType] = React.useState([]);
     const [sublabel1value, setsublabel1value] = React.useState('');
     const [descriptionvalue, setdescriptionvalue] = React.useState('');
+    const [height, setHeight] = React.useState(9999);
+    const [length, setLength] = React.useState(9999);
+    const [breadth, setBredth] = React.useState(9999);
 
-    function Empty_and_Null_Check(value){
-        if(value==undefined || value==null|| value==''){
+    function Empty_and_Null_Check(value) {
+        if (value == undefined || value == null || value == '') {
             return "0.0";
-        }else{
+        } else {
             return value;
         }
     }
 
-    function areaFormula(prefix,B,H,L,Q){
-        let result=0.0;
-        switch(prefix){
+    function areaFormula(prefix, B, H, L, Q) {
+        let result = 0.0;
+        switch (prefix) {
             case "D":
             case "ES":
             case "V":
-            case "W":
-                result=parseFloat(B)*parseFloat(H)*parseFloat(Q);
+            case "W": result = parseFloat(B) * parseFloat(H) * parseFloat(Q);
                 break;
             case "CB":
             case "LT":
             case "OT":
             case "PA":
             case "PL":
-            case "PO":
-                result=parseFloat(L)*parseFloat(H)*parseFloat(Q);
+            case "PO": result = parseFloat(L) * parseFloat(H) * parseFloat(Q);
                 break;
             case "CJ":
             case "FL":
             case "LA":
             case "OA":
-            case "RA":
-                result=parseFloat(L)*parseFloat(B)*parseFloat(Q);
+            case "RA": result = parseFloat(L) * parseFloat(B) * parseFloat(Q);
                 break;
-            default:
-            result=0.0;
-            
+            default: result = 0.0;
+
         }
         return result;
     }
 
-    function volumeCalculation(prefix,B,C,H,L,O,Q){
-       let result=0.0;
-        B=parseFloat(B.toFixed(2));
-        C=parseFloat(C.toFixed(2));
-        H=parseFloat(H.toFixed(2));
-        L=parseFloat(L.toFixed(2));
-        O=parseFloat(O.toFixed(2));
-        Q=parseFloat(Q.toFixed(2));
-        
-        switch(prefix){
-        case "B":
-        case "BA":
-        case "CK":
-        case "CV":
-        case "CW":
-        case "E":
-        case "EF":
-        case "F":
-        case "FB":
-        case "J":
-        case "K":
-        case "LI":
-        case "NP":
-        case "NAGAPATTI":
-        case "OV":
-        case "RT":
-        case "RV":
-        case "SH":
-        case "WL":
-            result=L*B*H*Q;
-            break;
-        case "BC":
-            result=C*C*L*Q*7/88;
-            break;
-        case "Q":
-        case "CH":
-        case "EP":
-        case "MS":
-        case "OQ":
-        case "WP":
-            result=Q;
-            break;
-        case "CC":
-        case "CE":
-        case "CF":
-        case "RC":
-            result=C*C*H*Q*7/88;
-            break;
-        case "LQ":
-        case "RM":
-            result=L*Q;
-            break;
-        case "SI":
-            result=L*B*H*O;
-            break;
-        default: result=0.0;
+    function volumeCalculation(prefix, B, C, H, L, O, Q) {
+        let result = 0.0;
+        B = parseFloat(B.toFixed(2));
+        C = parseFloat(C.toFixed(2));
+        H = parseFloat(H.toFixed(2));
+        L = parseFloat(L.toFixed(2));
+        O = parseFloat(O.toFixed(2));
+        Q = parseFloat(Q.toFixed(2));
+
+        switch (prefix) {
+            case "B":
+            case "BA":
+            case "CK":
+            case "CV":
+            case "CW":
+            case "E":
+            case "EF":
+            case "F":
+            case "FB":
+            case "J":
+            case "K":
+            case "LI":
+            case "NP":
+            case "NAGAPATTI":
+            case "OV":
+            case "RT":
+            case "RV":
+            case "SH":
+            case "WL": result = L * B * H * Q;
+                break;
+            case "BC": result = C * C * L * Q * 7 / 88;
+                break;
+            case "Q":
+            case "CH":
+            case "EP":
+            case "MS":
+            case "OQ":
+            case "WP": result = Q;
+                break;
+            case "CC":
+            case "CE":
+            case "CF":
+            case "RC": result = C * C * H * Q * 7 / 88;
+                break;
+            case "LQ":
+            case "RM": result = L * Q;
+                break;
+            case "SI": result = L * B * H * O;
+                break;
+            default: result = 0.0;
         }
         return result.toFixed(2);
-        
+
     }
 
     // Orientation.map((value,key)=>{
@@ -177,7 +176,6 @@ export default function FieldMeasurementsPanel(props) {
     //             alert(error);
     //         });
 
-         
 
     const [structureTypeLabelPrefix, setStructureTypeLabelPrefix] = React.useState("");
     const [state, setState] = React.useState({
@@ -262,6 +260,29 @@ export default function FieldMeasurementsPanel(props) {
         // alert(event.target.value);
     };
 
+    const handleXAxisTextFieldChange = (event) => {
+        setXAxis(event.target.value);
+    };
+
+    const handleYAxisTextFieldChange = (event) => {
+        setYAxis(event.target.value);
+    };
+
+    const handleCircumferenceTextFieldChange = (event) => {
+        setCircumference(event.target.value);
+    }
+
+    const handleLengthTextFieldChange = (event) => {
+        setLength(event.target.value);
+    };
+    const handleHeightTextFieldChange = (event) => {
+        setHeight(event.target.value);
+    };
+    const handleBredthTextFieldChange = (event) => {
+        setBredth(event.target.value);
+    };
+
+
     const handleMainlabel = (event) => {
         setmainLabelvalue1(event.target.value);
         // alert(event.target.value);
@@ -287,10 +308,10 @@ export default function FieldMeasurementsPanel(props) {
             alert("Sublabel Error " + err);
         });
     };
-    const handleChangeLabelType = (event) => { // alert( "Label:"+ event.target.value+" DSRID:"+dsrid)
-       
-       // alert("DSRID " + DSRID);
-         setdsrid(DSRID);
+    const handleChangeLabelType = (event) => {
+        // alert( "Label:"+ event.target.value+" DSRID:"+dsrid)
+
+        // alert("DSRID " + DSRID);
         // alert(DSRID);
 
         setMainLabel([]);
@@ -305,9 +326,8 @@ export default function FieldMeasurementsPanel(props) {
         }).catch((err) => {
             alert("Error");
         });
-        
 
-        
+
     };
 
     React.useEffect(() => {
@@ -384,14 +404,11 @@ export default function FieldMeasurementsPanel(props) {
                     y_axisField: true
                 });
                 break;
-            case "FL":
             case "LA":
             case "LT":
-            case "OA":
             case "OT":
             case "PA":
             case "PO":
-            case "RA":
                 setState({
                     lengthField: true,
                     breadthField: false,
@@ -440,6 +457,21 @@ export default function FieldMeasurementsPanel(props) {
                     y_axisField: false
                 });
                 break;
+                //RA
+                case "OA":
+                case "FL":
+                case "RA":setState({
+                    lengthField: true,
+                    breadthField: true,
+                    heightField: false,
+                    circumferenceField: false,
+                    createCopy: false,
+                    orientationField: false,
+                    x_axisField: false,
+                    y_axisField: false
+                });
+                break;
+
             default:
                 setState({
                     lengthField: false,
@@ -478,7 +510,7 @@ export default function FieldMeasurementsPanel(props) {
     const handleSave = () => { // alert("Field Save");
         let lable = document.getElementById("label-type-select").value;
         let mainlable = document.getElementById("main-label-select").value;
-        let sublable = document.getElementById("sub-label-select").value;//sub-label-select-label
+        let sublable = document.getElementById("sub-label-select").value; // sub-label-select-label
         let description = document.getElementById("description").value;
         let serialNo = document.getElementById("serialNo").value;
         let formula = document.getElementById("formula").value;
@@ -487,153 +519,52 @@ export default function FieldMeasurementsPanel(props) {
         let mainLabel = document.getElementById("mainLabel").value;
         let subLabel = document.getElementById("subLabel").value;
         let structure_element_orientation_select_label = document.getElementById("structure-element-orientation-select-label").value;
-        let xAxis = document.getElementById("xAxis").value;
-        let yAxis = document.getElementById("yAxis").value;
-        let length = document.getElementById("length").value;
-        let breadth = document.getElementById("breadth").value;
-        let height = document.getElementById("height").value;
-        let circumference = document.getElementById("circumference").value;
+        // setXAxis = document.getElementById("xAxis").value;
+        // setYAxis = document.getElementById("yAxis").value;
+        // let length = document.getElementById("length").value;
+        // let breadth = document.getElementById("breadth").value;
+        // let height = document.getElementById("height").value;
+        // let circumference = document.getElementById("circumference").value;
         let quantity = document.getElementById("quantity").value;
 
-        alert("MV "+mainLabel);
+        let TotalArea = areaFormula(strtypeValue, parseFloat(Empty_and_Null_Check(breadth)), parseFloat(Empty_and_Null_Check(height)), parseFloat(Empty_and_Null_Check(length)), parseFloat(Empty_and_Null_Check(quantity)));
+        let Volume = volumeCalculation(strtypeValue, // /prefix,B,C,H,L,O,Q
+            parseFloat(Empty_and_Null_Check(breadth)), parseFloat(Empty_and_Null_Check(circumference)), parseFloat(Empty_and_Null_Check(height)), parseFloat(Empty_and_Null_Check(length)), parseFloat(Empty_and_Null_Check(1)), // O?
+            parseFloat(Empty_and_Null_Check(quantity)));
 
 
-        if (copy == true) {
-            if (mainLabelvalue1 == 'E') {
-                alert("E")
-                axios.post(Constants.url + "UKP/rest/endpoints/InsertFieldMeaurements", {
-                    "GeneralInfoID:": props.GeneralInfoID,
-                    "StructureElementID": structureIDValue,
-                    "SerialNo": parseInt(serialNo),
-                    "ItemDescription": "EXCAVATION",
-                    " MainLabel": 'E' + SLNUMBER,
-                    " SubLabel": 'E' + SLNUMBER,
-                    "O": orientation,
-                    "X": xAxis,
-                    "Y": parseFloat(yAxis),
-                    "L": length,
-                    "B": breadth,
-                    "H": parseFloat(height),
-                    "C": parseFloat(circumference),
-                    "Q": quantity,
-                    "D": 0,
-                    "DsrSubID": sublabelvalue,
-                    "UomID": uomID,
-                    "UomCode": uomCode,
-                    "TotalArea": areaFormula("E",parseFloat(Empty_and_Null_Check(breadth)),
-                    parseFloat(Empty_and_Null_Check(height)),
-                    parseFloat(Empty_and_Null_Check(length)),
-                    parseFloat(Empty_and_Null_Check(quantity))),//prefix,B,H,L,Q
-                    "TotalVolume": volumeCalculation("E",       ///prefix,B,C,H,L,O,Q
-                    parseFloat(Empty_and_Null_Check(breadth)),
-                    parseFloat(Empty_and_Null_Check(circumference)),
-                    parseFloat(Empty_and_Null_Check(height)),
-                    parseFloat(Empty_and_Null_Check(length)),
-                    parseFloat(Empty_and_Null_Check(1)),//O?
-                    parseFloat(Empty_and_Null_Check(breadth))),
-                    "DSRArea": rate*areaFormula("E",parseFloat(Empty_and_Null_Check(breadth)),
-                    parseFloat(Empty_and_Null_Check(height)),
-                    parseFloat(Empty_and_Null_Check(length)),
-                    parseFloat(Empty_and_Null_Check(quantity))),
-                    "DSRVolume": rate*volumeCalculation("E",       ///prefix,B,C,H,L,O,Q
-                    parseFloat(Empty_and_Null_Check(breadth)),
-                    parseFloat(Empty_and_Null_Check(circumference)),
-                    parseFloat(Empty_and_Null_Check(height)),
-                    parseFloat(Empty_and_Null_Check(length)),
-                    parseFloat(Empty_and_Null_Check(1)),//O?
-                    parseFloat(Empty_and_Null_Check(breadth))),
-                    "TotalAreaCalculated": areaFormula("E",parseFloat(Empty_and_Null_Check(breadth)),
-                    parseFloat(Empty_and_Null_Check(height)),
-                    parseFloat(Empty_and_Null_Check(length)),
-                    parseFloat(Empty_and_Null_Check(quantity))),//prefix,B,H,L,Q,
-                    "TotalVolumeCalculated":volumeCalculation("E",       ///prefix,B,C,H,L,O,Q
-                    parseFloat(Empty_and_Null_Check(breadth)),
-                    parseFloat(Empty_and_Null_Check(circumference)),
-                    parseFloat(Empty_and_Null_Check(height)),
-                    parseFloat(Empty_and_Null_Check(length)),
-                    parseFloat(Empty_and_Null_Check(1)),//O?
-                    parseFloat(Empty_and_Null_Check(breadth))),
-                    "CopyFromID": "",
-                    "Inactive": 0,
-                    "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                    "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                    "DsrOrder": orderType
-                }).then((res) => {
-                    if (res.data.statusCode == 200 && res.data.status == true) {
+        // alert("TotalArea " + TotalArea + " Volume " + Volume + " strtypeValue " + strtypeValue + " SLNUMBER " + SLNUMBER + " copy " + copy);
 
-                        axios.post(Constants.url + "UKP/rest/endpoints/InsertFieldMeaurements", {
-                            "GeneralInfoID": props.GeneralInfoID,
-                            "StructureElementID": structureIDValue,
-                            "SerialNo": parseInt(serialNo),
-                            "ItemDescription": "FOUNDATION",
-                            "MainLabel": 'F' + SLNUMBER,
-                            "SubLabel": 'F' + SLNUMBER,
-                            "O": orientation,
-                            "X": xAxis,
-                            "Y": parseFloat(yAxis),
-                            "L": length,
-                            "B": breadth,
-                            "H": parseFloat(height),
-                            "C": parseFloat(circumference),
-                            "Q": quantity,
-                            "D": 0,
-                            "DsrSubID": sublabelvalue,
-                            "UomID": uomID,
-                            "UomCode": uomCode,
-                            "TotalArea": 12.35,
-                            "TotalVolume": 14.2,
-                            "DSRArea": 13.2,
-                            "DSRVolume": 18.2,
-                            "TotalAreaCalculated": 32.2,
-                            "TotalVolumeCalculated": 18.2,
-                            "CopyFromID": "",
-                            "Inactive": 0,
-                            "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                            "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                            "DsrOrder": orderType
-                        }).then(res => {
-                            if (res.data.statusCode == 200 && res.data.status == true) {
-                                alert('Success')
-                            }
-                        }).catch(err => {
-                            alert('Error ' + err);
-                        })
-
-                    }
-                }).catch((err) => {
-                    alert("Error->*" + err);
-                });
-
-            }
+        // alert("MV " + generalInfoID);
 
 
-        } else if (mainLabelvalue1 == 'PL') {
+        if (strtypeValue == 'E' && copy == true) { // alert("E")
             axios.post(Constants.url + "UKP/rest/endpoints/InsertFieldMeaurements", {
-                "GeneralInfoID": props.GeneralInfoID,
+                "GeneralInfoID": generalInfoID,
                 "StructureElementID": structureIDValue,
                 "SerialNo": parseInt(serialNo),
-                "ItemDescription": "PLASTER ING",
-                "MainLabel": 'PL' + SLNUMBER,
-                "SubLabel": 'PL' + SLNUMBER,
+                "ItemDescription": "EXCAVATION",
+                "MainLabel": mainLabel,
+                "SubLabel": subLabel,
                 "O": orientation,
                 "X": xAxis,
-                "Y": parseFloat(yAxis),
-                "L": length,
-                "B": breadth,
+                "Y": yAxis,
+                "L": parseFloat(length),
+                "B": parseFloat(breadth),
                 "H": parseFloat(height),
-                "C": parseFloat(circumference),
+                "C": circumference,
                 "Q": quantity,
                 "D": 0,
                 "DsrSubID": sublabelvalue,
                 "UomID": uomID,
                 "UomCode": uomCode,
-                "TotalArea": 12.35,
-                "TotalVolume": 14.2,
-                "DSRArea": 13.2,
-                "DSRVolume": 18.2,
-                "TotalAreaCalculated": 32.2,
-                "TotalVolumeCalculated": 18.2,
-                "CopyFromID": "",
+                "TotalArea": TotalArea, // prefix,B,H,L,Q
+                "TotalVolume": Volume,
+                "DSRArea": rate * TotalArea,
+                "DSRVolume": rate * Volume, // O?
+                "TotalAreaCalculated": TotalArea, // prefix,B,H,L,Q,
+                "TotalVolumeCalculated": Volume,
+                "CopyFromID": structureIDValue, // structureIDValue,
                 "Inactive": 0,
                 "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
                 "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
@@ -641,38 +572,117 @@ export default function FieldMeasurementsPanel(props) {
             }).then((res) => {
                 if (res.data.statusCode == 200 && res.data.status == true) {
                     axios.post(Constants.url + "UKP/rest/endpoints/InsertFieldMeaurements", {
-                        "GeneralInfoID": props.GeneralInfoID,
+                        "GeneralInfoID": generalInfoID,
                         "StructureElementID": structureIDValue,
                         "SerialNo": parseInt(serialNo),
-                        "ItemDescription": "PAINTING",
-                        "MainLabel": 'PA' + SLNUMBER,
-                        "SubLabel": 'PA' + SLNUMBER,
+                        "ItemDescription": "FOUNDATION",
+                        "MainLabel": 'F' + SLNUMBER,
+                        "SubLabel": 'F' + SLNUMBER,
                         "O": orientation,
                         "X": xAxis,
-                        "Y": parseFloat(yAxis),
-                        "L": length,
-                        "B": breadth,
+                        "Y": yAxis,
+                        "L": parseFloat(length),
+                        "B": parseFloat(breadth),
                         "H": parseFloat(height),
-                        "C": parseFloat(circumference),
+                        "C": circumference,
                         "Q": quantity,
                         "D": 0,
                         "DsrSubID": sublabelvalue,
                         "UomID": uomID,
                         "UomCode": uomCode,
-                        "TotalArea": 12.35,
-                        "TotalVolume": 14.2,
-                        "DSRArea": 13.2,
-                        "DSRVolume": 18.2,
-                        "TotalAreaCalculated": 32.2,
-                        "TotalVolumeCalculated": 18.2,
-                        "CopyFromID": "",
+                        "TotalArea": TotalArea, // prefix,B,H,L,Q
+                        "TotalVolume": Volume,
+                        "DSRArea": rate * TotalArea,
+                        "DSRVolume": rate * Volume, // O?
+                        "TotalAreaCalculated": TotalArea, // prefix,B,H,L,Q,
+                        "TotalVolumeCalculated": Volume,
+                        "CopyFromID": structureIDValue,
                         "Inactive": 0,
                         "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
                         "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
                         "DsrOrder": orderType
                     }).then(res => {
                         if (res.data.statusCode == 200 && res.data.status == true) {
-                            alert('Success')
+                            toast.success("Success");
+                            resetFields();
+                        }
+                    }).catch(err => {
+                        alert('Error ' + err);
+                    })
+
+                }
+            }).catch((err) => {
+                alert("Error->*" + err);
+            });
+
+
+        } else if (strtypeValue == 'PL' && copy == true) {
+            axios.post(Constants.url + "UKP/rest/endpoints/InsertFieldMeaurements", {
+                "GeneralInfoID": generalInfoID,
+                "StructureElementID": structureIDValue,
+                "SerialNo": parseInt(serialNo),
+                "ItemDescription": "PLASTER ING",
+                "MainLabel": subLabel,
+                "SubLabel": subLabel,
+                "O": orientation,
+                "X": xAxis,
+                "Y": yAxis,
+                "L": length,
+                "B": breadth,
+                "H": parseFloat(height),
+                "C": circumference,
+                "Q": quantity,
+                "D": 0,
+                "DsrSubID": sublabelvalue,
+                "UomID": uomID,
+                "UomCode": uomCode,
+                "TotalArea": TotalArea, // prefix,B,H,L,Q
+                "TotalVolume": Volume,
+                "DSRArea": rate * TotalArea,
+                "DSRVolume": rate * Volume, // O?
+                "TotalAreaCalculated": TotalArea, // prefix,B,H,L,Q,
+                "TotalVolumeCalculated": Volume,
+                "CopyFromID": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53", // structureIDValue
+                "Inactive": 0,
+                "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                "DsrOrder": orderType
+            }).then((res) => {
+                if (res.data.statusCode == 200 && res.data.status == true) {
+                    axios.post(Constants.url + "UKP/rest/endpoints/InsertFieldMeaurements", {
+                        "GeneralInfoID": generalInfoID,
+                        "StructureElementID": structureIDValue,
+                        "SerialNo": parseInt(serialNo),
+                        "ItemDescription": "PAINTING",
+                        "MainLabel": subLabel,
+                        "SubLabel": subLabel,
+                        "O": orientation,
+                        "X": xAxis,
+                        "Y": yAxis,
+                        "L": length,
+                        "B": breadth,
+                        "H": parseFloat(height),
+                        "C": circumference,
+                        "Q": quantity,
+                        "D": 0,
+                        "DsrSubID": sublabelvalue,
+                        "UomID": uomID,
+                        "UomCode": uomCode,
+                        "TotalArea": TotalArea, // prefix,B,H,L,Q
+                        "TotalVolume": Volume,
+                        "DSRArea": rate * TotalArea,
+                        "DSRVolume": rate * Volume, // O?
+                        "TotalAreaCalculated": TotalArea, // prefix,B,H,L,Q,
+                        "TotalVolumeCalculated": Volume,
+                        "CopyFromID": structureIDValue,
+                        "Inactive": 0,
+                        "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                        "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                        "DsrOrder": orderType
+                    }).then(res => {
+                        if (res.data.statusCode == 200 && res.data.status == true) {
+                            toast.success("Success");
+                            resetFields();
                         }
                     }).catch(err => {
                         alert("Error->" + err);
@@ -684,39 +694,50 @@ export default function FieldMeasurementsPanel(props) {
             });
 
         } else {
+            //             alert("GeneralInfoID "+generalInfoID+"\n"
+            //         +"StructureElementID \n"+generalInfoID+" \n"+" serialNo"+
+            //         parseInt(serialNo)+" \n "+itemDescription+" \n"+
+            //         "itemDescription "+itemDescription+" \n"+
+            //         "\n mainLabel"+mainLabel+"\nSubLabel "+subLabel+ "\nSubLabel "+subLabel+"\n O"+subLabel+"\nX "+xAxis+"\ny "+yAxis+"\nL "+parseFloat(Empty_and_Null_Check(length) )+"\n parseFloat(breadth)"+parseFloat(Empty_and_Null_Check(breadth))+" \n"+" "+parseFloat(Empty_and_Null_Check(height))+
+            // "\nheight"+height+"\ncircumference"+circumference+"\nquantity"+quantity+"\nsublabelvalue"+sublabelvalue+"\nuomID"+uomID+"\nuomCode "+uomCode+"\n "+orderType
+            //             );
+            // alert("Height " + height);
             axios.post(Constants.url + "UKP/rest/endpoints/InsertFieldMeaurements", {
-                "GeneralInfoID": props.GeneralInfoID,
-                "StructureElementID": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                "GeneralInfoID": generalInfoID,
+                "StructureElementID": structureIDValue,
                 "SerialNo": parseInt(serialNo),
                 "ItemDescription": itemDescription,
                 "MainLabel": mainLabel,
                 "SubLabel": subLabel,
                 "O": orientation,
                 "X": xAxis,
-                "Y": parseFloat(yAxis),
-                "L": length,
-                "B": breadth,
+                "Y": yAxis,
+                "L": parseFloat(length),
+                "B": parseFloat(breadth),
                 "H": parseFloat(height),
-                "C": parseFloat(circumference),
+                "C": circumference,
                 "Q": quantity,
                 "D": 0,
                 "DsrSubID": sublabelvalue,
                 "UomID": uomID,
                 "UomCode": uomCode,
-                "TotalArea": 12.35,
-                "TotalVolume": 14.2,
-                "DSRArea": 13.2,
-                "DSRVolume": 18.2,
-                "TotalAreaCalculated": 32.2,
-                "TotalVolumeCalculated": 18.2,
-                "CopyFromID": "",
+                "TotalArea": TotalArea, // prefix,B,H,L,Q
+                "TotalVolume": Volume,
+                "DSRArea": rate * TotalArea,
+                "DSRVolume": rate * Volume, // O?
+                "TotalAreaCalculated": TotalArea, // prefix,B,H,L,Q,
+                "TotalVolumeCalculated": Volume,
+                "CopyFromID": 'BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53', // structureIDValue,
                 "Inactive": 0,
                 "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
                 "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
                 "DsrOrder": orderType
             }).then((res) => {
                 if (res.data.statusCode == 200 && res.data.status == true) {
-                    alert("Success");
+                    toast.success("Success");
+                    resetFields();
+                } else {
+                    toast.error("Error " + res.data.statusCode + " " + res.data.status);
                 }
             }).catch((err) => {
                 alert("Error->" + err);
@@ -735,13 +756,27 @@ export default function FieldMeasurementsPanel(props) {
         );
     };
 
+    const resetFields = () => {
+        document.getElementById("itemDescription").value = '';
+        document.getElementById("mainLabel").value = '';
+        document.getElementById("subLabel").value = '';
+        document.getElementById("structure-element-orientation-select-label").value = '';
+        document.getElementById("xAxis").value = '';
+        document.getElementById("yAxis").value = '';
+        document.getElementById("length").value = '';
+        document.getElementById("breadth").value = '';
+        document.getElementById("height").value = '';
+        document.getElementById("circumference").value = '';
+        document.getElementById("quantity").value = '';
+    }
+
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleAdd = () => {};
     const [sublabelvalue, setsublabelvalue] = React.useState("");
-    const [rate,setrate]=React.useState(0);
+    const [rate, setrate] = React.useState(0);
 
     const handleChangesublabel = (event) => {
         setsublabelvalue(event.target.value);
@@ -977,10 +1012,10 @@ export default function FieldMeasurementsPanel(props) {
                                 }
                             }/>
                         <TextField autoFocus margin="dense"
-                            value={sublabel1value}
+                            //value={sublabel1value}
                             id="subLabel"
                             label="Sub Label"
-                            disabled={false}
+                            //disabled={false}
                             style={
                                 {
                                     marginLeft: "20px",
@@ -1023,6 +1058,7 @@ export default function FieldMeasurementsPanel(props) {
                             } </Select>
                         </FormControl>
                         <TextField autoFocus margin="dense" id="xAxis" label="X-Axis"
+                            onChange={handleXAxisTextFieldChange}
                             style={
                                 {
                                     marginLeft: "20px",
@@ -1033,6 +1069,7 @@ export default function FieldMeasurementsPanel(props) {
                                 !state.x_axisField
                             }/>
                         <TextField autoFocus margin="dense" id="yAxis" label="Y-Axis"
+                            onChange={handleYAxisTextFieldChange}
                             style={
                                 {
                                     marginLeft: "20px",
@@ -1043,6 +1080,7 @@ export default function FieldMeasurementsPanel(props) {
                                 !state.y_axisField
                             }/>
                         <TextField autoFocus margin="dense" id="length" label="Length"
+                            onChange={handleLengthTextFieldChange}
                             style={
                                 {
                                     marginLeft: "20px",
@@ -1053,6 +1091,7 @@ export default function FieldMeasurementsPanel(props) {
                                 !state.lengthField
                             }/>
                         <TextField autoFocus margin="dense" id="breadth" label="Breadth"
+                            onChange={handleBredthTextFieldChange}
                             style={
                                 {
                                     marginLeft: "20px",
@@ -1063,6 +1102,7 @@ export default function FieldMeasurementsPanel(props) {
                                 !state.breadthField
                             }/>
                         <TextField autoFocus margin="dense" id="height" label="Height"
+                            onChange={handleHeightTextFieldChange}
                             style={
                                 {
                                     marginLeft: "20px",
@@ -1073,6 +1113,7 @@ export default function FieldMeasurementsPanel(props) {
                                 !state.heightField
                             }/>
                         <TextField autoFocus margin="dense" id="circumference" label="Circumference" type="number"
+                            onChange={handleCircumferenceTextFieldChange}
                             style={
                                 {
                                     marginLeft: "20px",
@@ -1124,6 +1165,7 @@ export default function FieldMeasurementsPanel(props) {
                     <GIElementDataTable/>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     );
 }
