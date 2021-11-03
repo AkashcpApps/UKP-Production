@@ -25,16 +25,18 @@ class FloorPlan extends React.Component {
             }
         }).then(res => {
             //alert("res.data "+res.data.structureElements.length)
+            this.setState({drawingCoordinates : res.data.structureElements})
          
-            this.state.drawingCoordinates = res.data.structureElements;
-            alert(this.state.drawingCoordinates.length)
+          //  this.state.drawingCoordinates = res.data.structureElements;
+           // alert("SIZE "+this.state.drawingCoordinates.length)
+            this.updateCanvas();
            // alert( this.state.drawingCoordinates.structureElements.length+" "+value);
         })
             .catch(err => {
                 alert("Error " + err);
             });
 
-        this.updateCanvas();
+       
     }
     updateCanvas() {
         var headerX = 30;
@@ -295,7 +297,9 @@ class FloorPlan extends React.Component {
             ]
         };
         //var textEntries = drawingCoordinates.textEntry;
-        var structureElements = this.state.drawingCoordinates.structureElements;
+        var structureElements = this.state.drawingCoordinates;
+
+     //  alert("structureElements "+structureElements.length);
 
        // alert('structureElements size '+structureElements.length)
 
@@ -311,8 +315,8 @@ class FloorPlan extends React.Component {
         if (structureElements != null && structureElements != undefined && structureElements.length > 0) {
             structureElements.forEach((elements) => {
 
-                let str="mainLabel "+elements.mainLabel+"\n"+" subLabel"+elements.subLabel+"\n "+" orientation"+elements.orientation+"\n xAxis"+elements.xAxis+"\n yAxis"+elements.yAxis+"\n length"+elements.elements+"\n breadth "+elements.breadth+"\n height"+elements.height+"\n circumference "+elements.height;
-                alert(str);
+                //let str="mainLabel "+elements.mainLabel+"\n"+" subLabel"+elements.subLabel+"\n "+" orientation"+elements.orientation+"\n xAxis"+elements.xAxis+"\n yAxis"+elements.yAxis+"\n length"+elements.elements+"\n breadth "+elements.breadth+"\n height"+elements.height+"\n circumference "+elements.height;
+              //  alert(str);
 
                 var elementWidth = scaleConstWidthInPx;
                 var elementlength = elements.length;
