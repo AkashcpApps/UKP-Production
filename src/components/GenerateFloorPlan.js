@@ -4,15 +4,13 @@ import axios from 'axios';
 import * as Constants from '../utils/Constants';
 
 class FloorPlan extends React.Component {
-   
     
 
     constructor(props) {
         super(props);
         
         this.state = {
-            drawingCoordinates: {},
-            structureElements:[]
+            drawingCoordinates: {}
         }
     };
 
@@ -27,11 +25,9 @@ class FloorPlan extends React.Component {
             }
         }).then(res => {
             //alert("res.data "+res.data.structureElements.length)
-           // structureElements=res.data.structureElements;
-           this.state.structureElements=res.data.structureElements;
          
             this.state.drawingCoordinates = res.data.structureElements;
-           // alert("SIZE "+this.state.structureElements.length)
+            alert(this.state.drawingCoordinates.length)
            // alert( this.state.drawingCoordinates.structureElements.length+" "+value);
         })
             .catch(err => {
@@ -298,24 +294,22 @@ class FloorPlan extends React.Component {
                 }
             ]
         };
-        var superStructureElements = [];
-        var superStructureElementCount = 0;
         //var textEntries = drawingCoordinates.textEntry;
-        
+        var structureElements = this.state.drawingCoordinates.structureElements;
 
        // alert('structureElements size '+structureElements.length)
 
-     
+        //textEntries.forEach((textEntry) => {
 
-     
+        //});
+
+        var superStructureElements = [];
+        var superStructureElementCount = 0;
 
       //  var structureElements=this.state.drawingCoordinates;
 
-      alert("Above ForEach "+this.state.structureElements+"   this.state.structureElements"+  this.state.structureElements.length);
-     // var structureElements = this.state.structureElements;
-
-        if (this.state.structureElements != null && this.state.structureElements != undefined && this.state.structureElements.length > 0) {
-            this.state.structureElements.forEach((elements) => {
+        if (structureElements != null && structureElements != undefined && structureElements.length > 0) {
+            structureElements.forEach((elements) => {
 
                 let str="mainLabel "+elements.mainLabel+"\n"+" subLabel"+elements.subLabel+"\n "+" orientation"+elements.orientation+"\n xAxis"+elements.xAxis+"\n yAxis"+elements.yAxis+"\n length"+elements.elements+"\n breadth "+elements.breadth+"\n height"+elements.height+"\n circumference "+elements.height;
                 alert(str);
@@ -394,7 +388,7 @@ class FloorPlan extends React.Component {
                 }
             });
         
-            this.state.structureElements.forEach((elements) => {
+            structureElements.forEach((elements) => {
 
                 if (elements.mainLabel != elements.subLabel) {
 

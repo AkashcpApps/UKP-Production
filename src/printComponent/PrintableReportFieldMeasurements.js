@@ -15,6 +15,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
 
   state = {
     FmList: [],
+    fullReport:[],
     mGenInfoReport: "",
   };
   componentDidMount() {
@@ -32,26 +33,27 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
       .catch((err) => {
         alert(err);
       });
+
+      axios.get('http://59.97.20.208:8080/UKP/rest/endpoints/GetReportWithElementsDsrDetails',{
+        params:{
+            "GenInfoID":this.props.generalInfoId
+        }
+    }).then(res=>{
+        if(res.data.status==true && res.data.statusCode==200){
+
+           // let datats=res.data.subDsrDetailsWithFM;
+
+           this.setState({fullReport:res.data.subDsrDetailsWithFM});
+           console.log("SIZE "+this.state.fullReport.length);
+        }
+
+    }).catch(err=>{
+        alert("Err "+err)
+
+    })
+
+
   }
-  //  const[FmList,setFmList]=React.useState([]);
-  //  const[mGenInfoReport,setmGenInfoReport]=React.useState('');
-
-  //  })
-  //  React.useEffect(()=>{
-  //   axios.get('http://localhost:8080/UKP/rest/endpoints/GetReportWithElements',{
-  //   params:{
-  //    GenInfoID:'6CC5E9F0-DC89-4B53-B4D5-DA49D167617A'
-  //   }
-  // }).then(res=>{
-  //  setFmList(res.data.FmList);
-  //  FmList.map((value,key)=>{
-  //    console.log(value.GeneralInfoID);
-  //  })
-  // }).catch(err=>{
-  //   //alert(err);
-  // })
-
-  //  })
   render() {
     return (
       <div style={{margin:'16px'}}>
@@ -125,7 +127,117 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
           <p align="center">
           ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
-        <table>
+          {
+            this.state.fullReport.map((value, key) => {
+              let table = "";
+              let codeDescription = "";
+              let endResult = "";
+              let header = "";
+              header += "<table border='1' style='border-color:black;border-collapse:collapse; margin: auto'>";
+              header+="<tr>";
+              header += "<th style='width:7.5%'>";
+              header += "Main Label";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Sublabel";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Description";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "X";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Y";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Length";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Bredth/Width";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Height/Depth";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Circu Diagram";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Number of Item";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "UMO";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Volume";
+              header += "</th>";
+              header += "<th style='width:7.5%'>";
+              header += "Area";
+              header += "</th>";
+              header += "</tr></table>";
+              document.write(header);
+
+      
+      
+              codeDescription += "<table class='top' border='1' width='100%'  style='text-align: center; padding: 10px; border-color:black;border-collapse:collapse; margin:auto;'>";
+              codeDescription += "<tr>";
+              codeDescription += "<td width='10%' style='align-items:center'>";
+              codeDescription += value.SubDSrCode;
+              codeDescription += "</td>";
+              codeDescription += " <td width='90%' style='align-items:center'>";
+              codeDescription += value.SubDsrDescription;
+              codeDescription += "</td></tr></table>";
+              document.write(codeDescription);
+      
+              value.mFmList.map((v, key) => {
+                  table += "<tr>";
+                  table += "<td style='width:7.5%'>" + v.MainLabel + "</td>";
+                  table += "<td style='width:7.5%'>" + v.SubLabel + "</td>";
+                  table += "<td style='width:7.5%'>" + v.ItemDescription + "</td>";
+                  table += "<td style='width:7.5%'>" + ((v.X)=="9999.00"?"-":v.X)+ "</td>";
+                  table += "<td style='width:7.5%'>" + ((v.Y)=="9999.00"?"-":v.Y)+ "</td>";
+                  table += "<td style='width:7.5%'>" +  ((v.L)=="9999.00"?"-":v.L) + "</td>";
+                  table += "<td style='width:7.5%'>" + ((v.B)=="9999.00"?"-":v.B) + "</td>";
+                  table += "<td style='width:7.5%'>" + ((v.H)=="9999.00"?"-":v.H)+ "</td>";
+                  table += "<td style='width:7.5%'>" + "  " + "</td>";
+                  table += "<td style='width:7.5%'>" + ((v.Q)=="9999.00"?"-":v.Q) + "</td>";
+                  table += "<td style='width:7.5%'>" + v.UomCode + "</td>";
+                  table += "<td style='width:7.5%'>" + v.TotalVolume + "</td>";
+                  table += "<td style='width:7.5%'>" + v.TotalArea + "</td>";
+                  table += "<tr/>";
+              });
+              document.write("<table width='100%' border='1' style='border-color:black;border-collapse:collapse; margin:auto;text-align: center'>"+ table + "</table>");
+      
+              endResult += "<table width='100%' border='1' style='border-color:black;border-collapse:collapse; margin:auto;text-align: center'>";
+              endResult += "<tr>";
+              endResult += "<td>";
+              endResult += "<b>Main Work:</b>" + " "+value.DsrMainDescription;
+              endResult += "</td>";
+              endResult += "<td>";
+              endResult += "<b>Sub Workd:</b> " +" " +value.SubDSrCode;
+              endResult += "</td>";
+              endResult += "<td>";
+              endResult += "<b>Total Quantity: </b>" + " "+value.mTotalQuantity;
+              endResult += "</td>";
+              endResult += "<td>";
+              endResult += "<b>Rate</b> : " +" "+value.SubDsrRate;
+              endResult += "</td>";
+              endResult += "<td>";
+              endResult += "<b>Amount:</b> " +" "+ value.mAmount;
+              endResult += "</td>";
+              endResult += "</tr>";
+              endResult += '<table/>';
+              document.write(endResult);
+              document.write("<br/>");
+              document.write("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+              document.write("<br/>");
+          })
+          }
+
+
+
+          
+        {/* <table>
           <thead>
             <th align="center"><center>Main Label</center></th>
             <th align="center"><center>Sub Label</center></th>
@@ -170,7 +282,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
             <td width="5%">Rate (Rs): ₹ 163</td>
             <td width="5%">Amount (Rs): ₹ 1765.53</td>
           </tr>
-        </table>
+        </table> */}
         <p align="center">
           ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
