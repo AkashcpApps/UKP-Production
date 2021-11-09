@@ -247,7 +247,11 @@ export default function FieldMeasurementsPanel(props) {
                 setuomID(value.UomID);
                 setuomCode(value.UomCode);
                 setStructureIDValue(value.ID);
+                if(value.VolumeFormula!='' && value.VolumeFormula!=undefined && value.VolumeFormula==null){
                 setFormulaValue(value.VolumeFormula);
+            }else{
+                setFormulaValue(value.AreaFormula);
+            }
                 setdescriptionvalue(value.Description);
             }
         })
