@@ -460,7 +460,9 @@ export default function GIInputFormContainer(props) {
     const [structureCodeValue, setstructureCodeValue] = React.useState('');
     const handleChangeType = (event) => { // alert(event.target.value);
         let refNumber = document.getElementById("referenceNumber").value;
-        setstructureCodeValue(districtCodeValue + "/" + talukCodeValue + "/" + villageCodeValue + "/" + refNumber);
+       // alert(event.target.value);
+        //---------------------------->
+        setstructureCodeValue(event.target.value);
         // alert(districtCodeValue + "/"+talukCodeValue+"/"+villageCodeValue+"/"+refNumber);
         setstructureCode(event.target.value);
         let structureCodes = districtCodeValue + "/" + talukCodeValue + "/" + villageCodeValue + "/" + refNumber;
