@@ -66,6 +66,15 @@ export default function RegistrationForm() {
       let Password = document.getElementById("password").value='';
       let cpassword = document.getElementById("confirm-password").value='';
     };
+    
+    const nullCheck=(value)=>{
+        if(value=='' || value==null|| value==undefined){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     const handleIconClicks = (name) => () => {
         let firstName = document.getElementById("firstName").value;
@@ -82,6 +91,7 @@ export default function RegistrationForm() {
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
         today = dd + '/' + mm + '/' + yyyy;
+        if(nullCheck(firstName) && nullCheck(lastName) && nullCheck(emailId) && nullCheck(mobileNumber) && nullCheck(userName) && nullCheck(Password)){
         if (Password === cpassword) {
          //   alert(firstName + ' ' + lastName + ' ' + RoleID + ' ' + emailId + ' ' + parseInt(mobileNumber) + ' ' + today + ' ' + userName);
             if ((Password != null && Password != '')) {
@@ -118,6 +128,9 @@ export default function RegistrationForm() {
         } else {
             toast.error("Different password");
         }
+    }else{
+        toast.info("Enter all the Fields");
+    }
     };
 
     const {devAdmin, admin, dataEntry} = state;
