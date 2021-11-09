@@ -105,6 +105,45 @@ export default function GIInputFormContainer(props) {
     const [remarks, setremarks] = React.useState("");
     const [structuretypeValue, setstructuretypeValue] = React.useState("");
 
+    const clear=()=>{
+        document.getElementById('witnessSignature').value="";
+       document.getElementById("referenceNumber").value="";
+         document.getElementById("dateOfNotification").value="";
+         document.getElementById("dsrvalues").value="";
+
+      document.getElementById("ageOfStructure").value="";
+       document.getElementById("structureType").value="";
+
+      document.getElementById("structureCode").value="";
+
+        document.getElementById("totalBuiltUpArea").value="";
+
+        document.getElementById("siteEngineer").value="";
+    document.getElementById("designation").value="";
+       document.getElementById("witnessName").value="";
+
+    document.getElementById("remarks").value="";
+       document.getElementById("siteLocationNorth").value="";
+     document.getElementById("siteLocationSouth").value="";
+      document.getElementById("siteLocationEast").value="";
+         document.getElementById("siteLocationWest").value="";
+
+        document.getElementById("plinthArea").value="";
+       document.getElementById("openArea").value="";
+        document.getElementById("totalArea").value="";
+       document.getElementById("firstFloorArea").value="";
+       document.getElementById("secondFloorArea").value="";
+        document.getElementById("ownerName").value="";
+        //setdistrictValue('');
+      //  setdistrictCodeValue('');
+      //  setvillageCodeValue('');
+      //  settalukCodeValue('');
+      //  setstructureCodeValue('');
+        //settalukenable(true);
+        //setvillageenable(true);
+
+    };
+
 
     function saveClick() {
 
@@ -135,42 +174,8 @@ export default function GIInputFormContainer(props) {
         let totalAreas = document.getElementById("totalArea").value;
         let firstFloorAreas = document.getElementById("firstFloorArea").value;
         let secondFloorAreas = document.getElementById("secondFloorArea").value;
-
-        //alert(dates+' '+typeof(dates));
-
-        // alert("setdistrictValue "+districtValue)
-        // alert("districtCodeValue "+districtCodeValue)
-        // alert("settalukIDValue "+talukIDValue)
-        // alert('settalukCodeValue '+talukCodeValue)
-
-        // alert("setvillageIDValue "+villageIDValue);
-        // alert("setvillageCodeValue "+villageCodeValue)
-
-
-        // alert("refNumber "+refNumber);
-        // alert("dates "+dates);
-        // alert("dsrs "+dsrCode);
-        // alert("ageOfStructures "+ageOfStructures);
-        // alert("setStructureTypes "+StrType);
-        // alert("structureCodes "+structureCodes);
-        // alert("totalBuiltUpAreas "+totalBuiltUpAreas);
-        // alert("siteEngineers "+siteEngineers);
-        // alert("designations "+designations);
-        // alert("witnessNames "+witnessNames);
-        // alert("remarkss "+remarkss);
-        // alert("siteLocationNorths "+siteLocationNorths);
-        // alert("siteLocationSouths "+siteLocationSouths);
-        // alert("siteLocationEasts "+siteLocationEasts);
-        // alert("siteLocationWests "+siteLocationWests);
-        // alert("plinthAreas "+plinthAreas);
-        // alert("openAreas "+openAreas);
-        // alert("totalAreas "+totalAreas);
-        // alert("firstFloorAreas "+firstFloorAreas);
-        // alert("secondFloorAreas "+secondFloorAreas);
-
-        // let totalBuil=parseFloat(totalBuiltUpAreas)==null?
         let ownerNames = document.getElementById("ownerName").value;
-       // const date=dates;
+       
         let splits=dates.split('-');
         let dateValue=splits[1]+'/'+splits[2]+"/"+splits[0];
 
@@ -219,6 +224,7 @@ export default function GIInputFormContainer(props) {
         }).then(res => {
             if (res.data.statusCode == 200 && res.data.status == true) {
                 toast.success("Inserted Successfully");
+                clear();
                 // <Snackbar
                 // anchorOrigin={{
                 //     horizontal: "left",
