@@ -44,6 +44,7 @@ export default function DataTable() {
         axios.get(src)
         .then(function (response) {
            // setRows(response.data)
+           setRows([]);
            setRows(response.data.mDistList);
            // alert( "Success: " + response.data);
         })

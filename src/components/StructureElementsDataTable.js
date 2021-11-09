@@ -87,6 +87,7 @@ export default function DataTable() {
         axios.get(Constants.url+'UKP/rest/endpoints/GetStrElement')
         .then(function (response) {
            // setRows(response.data)
+           setRows([]);
 
            let value=response.data.mStrElementList;
            findAndReplace(value,1 ,"Yes");

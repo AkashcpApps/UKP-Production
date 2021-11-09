@@ -55,6 +55,7 @@ export default function DataTable() {
         toast.info("Refresh")
         axios.get(src)
         .then(function (response) {
+            setRows([]);
            setRows(response.data.mDistList);
         })
         .catch(function (error) {

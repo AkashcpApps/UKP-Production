@@ -84,7 +84,7 @@ export default function DataTable() {
                 // setRows(response.data)
                // setRows();
                 // alert( "Success: " + response.data);
-
+                setRows([]);
                 let value=response.data.mRateOfDepr;
                 findAndReplace(value,1 ,"Yes");
                 findAndReplace(value,0 ,"No");

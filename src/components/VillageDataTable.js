@@ -103,6 +103,7 @@ export default function DataTable() {
         })
             .then(function (response) {
                // setRows(response.data)
+               setRows([]);
                setRows(response.data.mVillageList);
                // alert( "Success: " + response.data);
             })
@@ -132,6 +133,7 @@ export default function DataTable() {
              })
                  .then(function (response) {
                     // setRows(response.data)
+                  
                     setRows(response.data.mVillageList);
                     // alert( "Success: " + response.data);
                  })
