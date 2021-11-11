@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import Webpages from ".";
 import img2 from "../images/basavaraj.jpeg";
 import img3 from "../images/ukps.jpg";
+import {storeSession,getstorageSession} from "../utils/Session";
 
 const axios = require("axios");
 
@@ -18,6 +19,13 @@ export default function Login() {
   // localStorage.setItem('login', false);
   //localStorage.clear();
   let result = localStorage.getItem("login");
+  
+  if(getstorageSession()!=null){
+    history.push("/transactions/general-information");
+  }
+  // }else{
+  //   history.push('/');
+  // }
 
   // if(result){
   //   history.push("/transactions/general-information");
@@ -28,19 +36,16 @@ export default function Login() {
   function submit() {
     let userName = document.getElementById("name").value;
     let password = document.getElementById("password").value;
-    // if (userName === "admin" && password === "admin123") {
-    //   history.push("/transactions/general-information");
-    // }
     axios
       .get(Constants.url + "UKP/rest/endpoints/verifyUser", {
         params: {
-          uname: userName,
-          pwd: password,
+          "uname": userName,
+          "pwd": password,
         },
       })
       .then((res) => {
         if (res.data.statusCode == 200 && res.data.status == true) {
-       //  alert('Success');
+          storeSession(res.data);
           history.push("/transactions/general-information");
           //localStorage.setItem('login', true);
          // alert("Success");
@@ -111,7 +116,7 @@ export default function Login() {
           <Button
             className='Loginbutton'
             type="submit"
-            style={{ marginLeft:8,marginRight:16 }}
+            style={{ marginLeft:"8px" ,marginRight:"16px" ,marginBottom:"10px"}}
             disabled={!validateForm()}
             onClick={submit}>
             Login

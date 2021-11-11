@@ -16,6 +16,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SettingsSystemDaydreamIcon from '@material-ui/icons/SettingsSystemDaydream';
 import RestoreIcon from '@material-ui/icons/Restore';
 import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const value='admin';
 export let  SidebarData=[];
@@ -165,6 +166,11 @@ if(value==='admin')
     path: "/systemmanager",
     icon: <IoIcons.IoMdHelpCircle />,
   },
+  {
+    title: "Signout",
+    path: "/logout",
+    icon: <ExitToAppIcon/>,
+  },
 ];
 }else{
   SidebarData= [
@@ -182,6 +188,11 @@ if(value==='admin')
               icon: <InfoIcon />,
         },
       ],
+    },
+    {
+      title: "Signout",
+      path: "/logout",
+      icon: <ExitToAppIcon/>,
     },
     
     

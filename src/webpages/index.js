@@ -33,6 +33,7 @@ import {
 } from "./Settings";
 import { Utilities, TextEntry, GenerateDrawing } from "./Utilities";
 import SystemManager from "./SystemManager";
+import SignOut from "./SignOut";
 
 
 const Webpages = () => {
@@ -81,6 +82,7 @@ const Webpages = () => {
         <Route path="/settings/config" exact component={Config} />
         <Route path="/settings/resetpassword" exact component={ResetPassword} />
         <Route path="/systemmanager" exact component={SystemManager} />
+        <Route path='/logout' exact component={SignOut}/>
 		
       </Switch>
     </Router>

@@ -318,18 +318,24 @@ export default function FieldMeasurementsPanel(props) {
         // alert("DSRID " + DSRID);
         // alert(DSRID);
 
-        setMainLabel([]);
+       // setMainLabel([]);
+       console.log("Value "+event.target.value);
+       console.log("DSRID:\n"+localStorage.getItem('dsrid'));
+       try{
         setLabelType(event.target.value);
         axios.get(Constants.url + "UKP/rest/endpoints/GetMainDsrByDSRNonDSR", {
             params: {
-                Label: event.target.value, // DSR NONDSR
-                DSRID: localStorage.getItem('dsrid')
+                "Label": event.target.value, // DSR NONDSR
+                "DSRID": localStorage.getItem('dsrid')
             }
         }).then((res) => {
             setMainLabel(res.data.mDSRMainList);
         }).catch((err) => {
             alert("Error");
         });
+    }catch(err){
+        alert("Error at handleChangeLabelType");
+    }
 
 
     };
