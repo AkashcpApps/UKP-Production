@@ -323,7 +323,7 @@ export default function FieldMeasurementsPanel(props) {
        console.log("DSRID:\n"+localStorage.getItem('dsrid'));
        try{
         setLabelType(event.target.value);
-        axios.get(Constants.url + "UKP/rest/endpoints/GetMainDsrByDSRNonDSR", {
+        axios.get(Constants.url+'UKP/rest/endpoints/GetMainDsrByDSRNonDSR', {
             params: {
                 "Label": event.target.value, // DSR NONDSR
                 "DSRID": localStorage.getItem('dsrid')

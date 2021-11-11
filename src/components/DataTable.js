@@ -14,12 +14,13 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Pagination from '@mui/material/Pagination';
 import * as Constants from '../utils/Constants';
 import AddIcon from '@material-ui/icons/Refresh';
-
+import { useHistory } from "react-router-dom";
 import GIUpdateFormContainer from './GIUpdateFormContainer';
 import './GIUpdateFormContainer.css';
 import './DataTable.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//import {storeSession,getstorageSession} from "../utils/Session";
 
 const axios = require('axios');
 let result=localStorage.getItem('login');
@@ -113,6 +114,14 @@ export default function DataTable() {
     const [open, setOpen] = React.useState(false);
     const [rows, setRows] = React.useState([]);
     const[rowId,setrowID]=React.useState('');
+    
+   // let history = useHistory();
+
+    // if(getstorageSession()!=null){
+    //     history.push("/transactions/general-information");
+    //   }else{
+    //     history.push('/');
+    //   }
 
     React.useEffect(() => {
       //  alert("Function called");

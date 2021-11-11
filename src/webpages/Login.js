@@ -23,6 +23,7 @@ export default function Login() {
   if(getstorageSession()!=null){
     history.push("/transactions/general-information");
   }
+  
   // }else{
   //   history.push('/');
   // }
@@ -39,8 +40,8 @@ export default function Login() {
     axios
       .get(Constants.url + "UKP/rest/endpoints/verifyUser", {
         params: {
-          "uname": userName,
-          "pwd": password,
+          "uname": userName.trim(),
+          "pwd": password.trim(),
         },
       })
       .then((res) => {

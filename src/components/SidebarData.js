@@ -167,7 +167,7 @@ if(value==='admin')
     icon: <IoIcons.IoMdHelpCircle />,
   },
   {
-    title: "Signout",
+    title: "Logout",
     path: "/logout",
     icon: <ExitToAppIcon/>,
   },
@@ -190,7 +190,7 @@ if(value==='admin')
       ],
     },
     {
-      title: "Signout",
+      title: "Logout",
       path: "/logout",
       icon: <ExitToAppIcon/>,
     },

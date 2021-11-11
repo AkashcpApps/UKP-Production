@@ -106,6 +106,17 @@ export default function TextEntryPanel() {
             [event.target.name]: event.target.checked
         });
     };
+    const clearTextEntry=()=>{
+        document.getElementById('serialNo').value='';
+     document.getElementById('areaName').value='';
+         document.getElementById('horizontal').value='';
+      document.getElementById('vertical').value='';
+         document.getElementById('horizontalWall1').value='';
+         document.getElementById('horizontalWall2').value='';
+         document.getElementById('verticalWall1').value='';
+        document.getElementById('verticalWall2').value='';
+
+    };
 
     const handleSave = () => {
         let serialNo = document.getElementById('serialNo').value;
@@ -132,6 +143,7 @@ export default function TextEntryPanel() {
         }).then(res => {
             if (res.data.status == true && res.data.statusCode == 200) {
                 toast.success("Successfully inserted");
+                clearTextEntry();
                 doRefresh(prev => prev + 1)
             } else {
                 toast.error(" Failed to insert");

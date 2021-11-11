@@ -269,16 +269,17 @@ export default function GIInputFormContainer(params) {
                         </div>
                         <div class="upadate-gi-col-small-2">
                             <label htmlFor="upload-document-label">
-                                <Input accept="*" id="upload-document-label" multiple type="file" />
+                                {/* <Input accept="*" id="upload-document-label" multiple type="file" /> */}
                                 <Button
                                      variant="contained"
                                      color="primary"
+                                     type="file"
+                                     accept='*'
                                     startIcon={<FileUploadIcon />}
                                     style={{
                                         float: 'left',
                                         top: '3px'
-                                    }}
-                                >
+                                    }}>
                                     Upload Document
                                 </Button>
                             </label>

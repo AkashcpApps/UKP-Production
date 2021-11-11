@@ -49,12 +49,13 @@ export default function RegistrationForm() {
         // to get the checked name
         const checkedName = event.target.name;
         setRoleID(checkedName);
-        // alert(checked + " " + checkedValue + " " + checkedName);
+        //alert(checked + " " + checkedValue + " " + checkedName);
     };
 
     const handleRadioChange = (event) => { // alert(event.target.value);
         setValue(event.target.value);
         setRoleID(event.target.value);
+       // alert('RoleID '+event.target.value);
     };
 
     const cleraFiled = () => {
@@ -105,7 +106,7 @@ export default function RegistrationForm() {
                     "EmailConfirmed": 0,
                     "PasswordHash": Password,
                     "SecurityStamp": "SecurityStamp",
-                    "PhoneNumber": mobileNumber,
+                    "PhoneNumber": parseInt(mobileNumber),
                     "PhoneNumberConfirmed": 0,
                     "TwoFactorEnabled": 0,
                     "LockoutEndDateUtc": today,
@@ -169,10 +170,13 @@ export default function RegistrationForm() {
                             <RadioGroup aria-label="quiz" name="quiz"
                                 value={value}
                                 onChange={handleRadioChange}>
-                                <FormControlLabel value="admin"
+                                     <FormControlLabel value="1"
+                                    control={<Radio/>}
+                                    label="Dev Admin"/>
+                                <FormControlLabel value="2"
                                     control={<Radio/>}
                                     label="Admin"/>
-                                <FormControlLabel value="dataEntry"
+                                <FormControlLabel value="3"
                                     control={<Radio/>}
                                     label="Data Entry"/>
                             </RadioGroup>
