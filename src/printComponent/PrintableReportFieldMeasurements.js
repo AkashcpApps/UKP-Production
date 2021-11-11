@@ -17,6 +17,8 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
     FmList: [],
     fullReport:[],
     mGenInfoReport: "",
+    finalReportPDF:""
+   
   };
   componentDidMount() {
     axios
@@ -122,72 +124,93 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
         </p>
         <p>Remarks:</p>
         <p align="center">
-          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
           <p align="center">
           ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
+          <p id="fullReportdetails"></p>
+         
+         
           {
+            
             this.state.fullReport.map((value, key) => {
+            // let finalReportPDF="";
               let table = "";
               let codeDescription = "";
               let endResult = "";
               let header = "";
-              header += "<table border='1' style='border-color:black;border-collapse:collapse; margin: auto'>";
+              header += "<table border='1' width='100%' style='border-color:black;border-collapse:collapse; margin: auto'>";
               header+="<tr>";
               header += "<th style='width:7.5%'>";
-              header += "Main Label";
+              header += "<center>Main Label </center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Sublabel";
+              header += "<center>Sublabel</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Description";
+              header += "<center>Description</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "X";
+              header += "<center>X</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Y";
+              header += "<center>Y</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Length";
+              header += "<center>Length</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Bredth/Width";
+              header += "<center>Bredth/Width</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Height/Depth";
+              header += "<center>Height/Depth</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Circu Diagram";
+              header += "<center>Circu Diagram</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Number of Item";
+              header += "<center>Number of Item</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "UMO";
+              header += "<center>UMO</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Volume";
+              header += "<center>Volume</center>";
               header += "</th>";
               header += "<th style='width:7.5%'>";
-              header += "Area";
+              header += "<center>Area</center>";
               header += "</th>";
               header += "</tr></table>";
-              document.write(header);
+             // document.write(header);
+             this.state.finalReportPDF+=header;
+            
 
       
       
-              codeDescription += "<table class='top' border='1' width='100%'  style='text-align: center; padding: 10px; border-color:black;border-collapse:collapse; margin:auto;'>";
-              codeDescription += "<tr>";
-              codeDescription += "<td width='10%' style='align-items:center'>";
-              codeDescription += value.SubDSrCode;
-              codeDescription += "</td>";
-              codeDescription += " <td width='90%' style='align-items:center'>";
-              codeDescription += value.SubDsrDescription;
-              codeDescription += "</td></tr></table>";
-              document.write(codeDescription);
+              // codeDescription += "<table border='1' width=100%  style='text-align: center; padding: 10px;'>";
+              // codeDescription += "<tr>";
+              // codeDescription += "<td width=10%>";
+              // codeDescription += value.SubDSrCode;
+              // codeDescription += "</td>";
+              // codeDescription += " <td width=90%>";
+              // codeDescription += value.SubDsrDescription;
+              // codeDescription += "</td></tr></table>";
+             // document.write(codeDescription);
+             
+             codeDescription+="<table border=1 width='100%' style=' padding: 10px ;border-collapse:collapse; margin: auto'>";
+             codeDescription+="<tr>";
+             codeDescription+="<td style='width:10% ;align:left'>";
+             codeDescription+=value.SubDSrCode;
+             codeDescription+=" </td>";
+             codeDescription+="<td style='width:90%;align:left'>";
+             codeDescription+= value.SubDsrDescription;
+             codeDescription+=" </td>";
+             codeDescription+="</tr>";
+             codeDescription+="</table>";
+             this.state.finalReportPDF+=codeDescription;
+
+            
       
               value.mFmList.map((v, key) => {
                   table += "<tr>";
@@ -206,8 +229,11 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
                   table += "<td style='width:7.5%'>" + v.TotalArea + "</td>";
                   table += "<tr/>";
               });
-              document.write("<table width='100%' border='1' style='border-color:black;border-collapse:collapse; margin:auto;text-align: center'>"+ table + "</table>");
+              this.state.finalReportPDF+="<table width='100%' border='1' style='border-color:black;border-collapse:collapse; margin:auto;text-align: center'>"+ table + "</table>";
+              
+            // document.write();
       
+            
               endResult += "<table width='100%' border='1' style='border-color:black;border-collapse:collapse; margin:auto;text-align: center'>";
               endResult += "<tr>";
               endResult += "<td>";
@@ -227,10 +253,15 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
               endResult += "</td>";
               endResult += "</tr>";
               endResult += '<table/>';
-              document.write(endResult);
-              document.write("<br/>");
-              document.write("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-              document.write("<br/>");
+              this.state.finalReportPDF+=endResult;
+              this.state.finalReportPDF+="<br/>";
+              this.state.finalReportPDF+="<p align='center'>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>";
+              this.state.finalReportPDF+="<br/>";
+              document.getElementById("fullReportdetails").innerHTML = this.state.finalReportPDF; 
+              //document.write(endResult);
+             // document.write("<br/>");
+              //document.write("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+              //document.write("<br/>");
           })
           }
 
@@ -284,7 +315,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
           </tr>
         </table> */}
         <p align="center">
-          ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
         {/* <ol>
           <li>
