@@ -45,6 +45,9 @@ export default function FieldMeasurementsPanel(props) {
     // let gridInfoID = localStorage.getItem('id');
     // alert("FieldMeasurement "+props.GeneralInfoID);
     const classes = useStyles();
+    {
+        document.title='UKP structure valuation'
+    }
 
     let DSRID = localStorage.getItem('dsrid');
     let generalInfoID = localStorage.getItem('generalInfoID');
