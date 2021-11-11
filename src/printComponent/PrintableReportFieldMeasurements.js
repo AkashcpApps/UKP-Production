@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import ReactToPrint from "react-to-print";
-//import "../App.css";
-//import '../printComponent/PrintStyle.css'
 import * as Constant from '../utils/Constants'
 
 const barNp = ["103/A", "103/B", "103C", "103E"];
-const value = "BK/BK_BAD/BK_BAD_1/103/A, 103/B, 103/C, 103/E";
 const axios = require("axios");
-//var FMLIST = [];
+
 export default class ComponentToPrintFieldMeasureMents extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -24,7 +21,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
     axios
       .get(Constant.url+"UKP/rest/endpoints/GetReportWithElements", {
         params: {
-          GenInfoID: this.props.generalInfoId,
+          "GenInfoID": this.props.generalInfoId,
         },
       })
       .then((res) => {
@@ -36,7 +33,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
         alert(err);
       });
 
-      axios.get('http://59.97.20.208:8080/UKP/rest/endpoints/GetReportWithElementsDsrDetails',{
+      axios.get(Constant.url+'UKP/rest/endpoints/GetReportWithElementsDsrDetails',{
         params:{
             "GenInfoID":this.props.generalInfoId
         }
@@ -54,11 +51,28 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
 
     })
 
+   
+
 
   }
+  dateTime(){
+    var today = new Date();
+    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+   // var time = today.getHours() + ":" + today.getMinutes();
+   // var datetime = date+' '+time;
+   // console.log("DATE--->"+datetime);
+    return date;
+  }
+
   render() {
     return (
+
+      
       <div style={{margin:'16px'}}>
+       {
+      
+         document.title=this.state.mGenInfoReport.OwnerName+this.dateTime()
+       }
         <div align="center">
           <p>
             <strong>
@@ -72,10 +86,6 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
         </div>
 
         <div>
-          {barNp.map((value, index) => {
-            value += ",";
-            console.log(value);
-          })}
           <p>
             Reference (VPC/UKP Number):{" "}
             <strong>{this.state.mGenInfoReport.Reference}</strong> Structure
@@ -197,10 +207,10 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
               // codeDescription += value.SubDsrDescription;
               // codeDescription += "</td></tr></table>";
              // document.write(codeDescription);
-             
+
              codeDescription+="<table border=1 width='100%' style=' padding: 10px ;border-collapse:collapse; margin: auto'>";
              codeDescription+="<tr>";
-             codeDescription+="<td style='width:10% ;align:left'>";
+             codeDescription+="<td style='width:10% ;align:left;'>";
              codeDescription+=value.SubDSrCode;
              codeDescription+=" </td>";
              codeDescription+="<td style='width:90%;align:left'>";
@@ -214,7 +224,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
       
               value.mFmList.map((v, key) => {
                   table += "<tr>";
-                  table += "<td style='width:7.5%'>" + v.MainLabel + "</td>";
+                  table += "<td style='padding-right: 10px;'>" + v.MainLabel + "</td>";
                   table += "<td style='width:7.5%'>" + v.SubLabel + "</td>";
                   table += "<td style='width:7.5%'>" + v.ItemDescription + "</td>";
                   table += "<td style='width:7.5%'>" + ((v.X)=="9999.00"?"-":v.X)+ "</td>";
@@ -236,7 +246,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
             
               endResult += "<table width='100%' border='1' style='border-color:black;border-collapse:collapse; margin:auto;text-align: center'>";
               endResult += "<tr>";
-              endResult += "<td>";
+              endResult += "<td style='align:'right''>";
               endResult += "<b>Main Work:</b>" + " "+value.DsrMainDescription;
               endResult += "</td>";
               endResult += "<td>";
@@ -267,81 +277,11 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
 
 
 
-          
-        {/* <table>
-          <thead>
-            <th align="center"><center>Main Label</center></th>
-            <th align="center"><center>Sub Label</center></th>
-            <th align="center"><center>Description</center></th>
-            <th align="center"><center>X</center></th>
-            <th align="center"><center>Y</center></th>
-            <th align="center"><center>Length</center></th>
-            <th align="center"><center>Breadth / Width</center></th>
-            <th align="center"><center>Height / Depth</center></th>
-            <th align="center"><center>Circu Diameter</center></th>
-            <th align="center"><center>Number of Item</center></th>
-            <th align="center"><center>UOM</center></th>
-            <th align="center"><center>Volume</center></th>
-            <th align="center"><center>Area</center></th>
-          </thead>
-          <tbody id="myTable">
-            {this.state.FmList.map((item, index) => (
-              <tr key={index}>
-                <td align="left">{item.MainLabel}</td>
-                <td>{item.SubLabel}</td>
-                <td>{item.ItemDescription}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{item.L}</td>
-                <td>{item.B}</td>
-                <td>{item.H}</td>
-                <td>{}</td>
-                <td>{item.DsrOrder}</td>
-                <td>{item.UomCode}</td>
-                <td>{item.TotalVolume}</td>
-                <td>{item.TotalAreaCalculated}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <table width="100%">
-          <tr>
-            <td width="70%">
-              Main Work: 2.EARTH WORK FOR BUILDINGS Sub Work: 2.
-            </td>
-            <td width="30%">Total Quantity: 10.8</td>
-            <td width="5%">Rate (Rs): ₹ 163</td>
-            <td width="5%">Amount (Rs): ₹ 1765.53</td>
-          </tr>
-        </table> */}
+       
         <p align="center">
         ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
-        {/* <ol>
-          <li>
-            Certified that the valuation is based in the measurements taken &
-            plans and estimates prepared in the office of the Asst. Executive
-            Engineer Rehabilitation Sub Division No:
-          </li>
-          <li>
-            Certified that the necessary depreciation charge has been deducted
-          </li>
-          <li>
-            Certified that the rates adopted for Valuation of the structure are
-            as per Sanctioned Schedule of Rates of Belgaum P.W.D circle and
-            approved Data Rates by S.E.,U.K.P – R&R Prevailing on the Date of
-            11(1) Notification of L.A. Act i.e. date of 11(1) Notification
-          </li>
-
-          <li>
-            Certified that the Strata met with has been classified after actual
-            verification at site
-          </li>
-          <li>
-            Certified that the cost of Total site area has not been considered
-            in the valuation (need confirmation) by SLAO separately
-          </li>
-        </ol> */}
+       
 
         <p>
           DETAIL VALUATION OF SUBMERGING STRUCTURES COMING UNDER

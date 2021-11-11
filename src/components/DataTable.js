@@ -114,7 +114,10 @@ export default function DataTable() {
     const [open, setOpen] = React.useState(false);
     const [rows, setRows] = React.useState([]);
     const[rowId,setrowID]=React.useState('');
-    
+    {
+        document.title='UKP structure valuation'
+    }
+
    // let history = useHistory();
 
     // if(getstorageSession()!=null){

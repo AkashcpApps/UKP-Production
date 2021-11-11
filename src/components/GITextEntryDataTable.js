@@ -63,6 +63,9 @@ const rows = [];
 export default function DataTable(props) {
     const [pageSize, setPageSize] = React.useState(10);
     const [rows, setRows] = React.useState([]);
+    {
+        document.title='UKP'
+    }
     
     React.useEffect(() => {
         /* fetch(`http://ff46-103-98-78-198.ngrok.io/UKP/rest/endpoints/GetAllDistrict`)
