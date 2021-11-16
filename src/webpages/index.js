@@ -34,14 +34,23 @@ import {
 import { Utilities, TextEntry, GenerateDrawing } from "./Utilities";
 import SystemManager from "./SystemManager";
 import SignOut from "./SignOut";
-
+import { useHistory } from "react-router-dom";
+import {storeSession,getstorageSession} from "../utils/Session";
 
 const Webpages = () => {
+  let history = useHistory();
+  if (getstorageSession() != null) {
+    console.log('getstorageSession DATA Present');
+} else {
+  //  console.log('getstorageSession DATA Not Present');
+ //return <SessionNotFound/>;
+ history.push('/sessionNotFound');
+}
   return (
     <Router>
       <Sidebar />
       <Switch>
-		  <Route path='/login' exact component={Login}/>
+		  {/* <Route path='/login' exact component={Login}/> */}
         <Route path="/transactions" exact component={Transactions} />
         <Route
           path="/transactions/general-information"

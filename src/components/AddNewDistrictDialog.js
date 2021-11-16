@@ -12,9 +12,6 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Constants from '../utils/Constants';
-
-
-
 import "./AddDialog.css";
 import { Container } from "@material-ui/core";
 const axios = require("axios");

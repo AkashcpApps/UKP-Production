@@ -46,7 +46,7 @@ export default function FieldMeasurementsPanel(props) {
     // alert("FieldMeasurement "+props.GeneralInfoID);
     const classes = useStyles();
     {
-        document.title='UKP structure valuation'
+        document.title='UKP Structure Valuation'
     }
 
     let DSRID = localStorage.getItem('dsrid');
@@ -539,6 +539,7 @@ export default function FieldMeasurementsPanel(props) {
         // let height = document.getElementById("height").value;
         // let circumference = document.getElementById("circumference").value;
         let quantity = document.getElementById("quantity").value;
+        let createdByUserID=localStorage.getItem('USER_ID');
 
         let TotalArea = areaFormula(strtypeValue, parseFloat(Empty_and_Null_Check(breadth)), parseFloat(Empty_and_Null_Check(height)), parseFloat(Empty_and_Null_Check(length)), parseFloat(Empty_and_Null_Check(quantity)));
         let Volume = volumeCalculation(strtypeValue, // /prefix,B,C,H,L,O,Q
@@ -579,8 +580,8 @@ export default function FieldMeasurementsPanel(props) {
                 "TotalVolumeCalculated": Volume,
                 "CopyFromID": structureIDValue, // structureIDValue,
                 "Inactive": 0,
-                "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                "CreatedBy": createdByUserID,
+                "ModifiedBy": createdByUserID,
                 "DsrOrder": orderType
             }).then((res) => {
                 if (res.data.statusCode == 200 && res.data.status == true) {
@@ -611,8 +612,8 @@ export default function FieldMeasurementsPanel(props) {
                         "TotalVolumeCalculated": Volume,
                         "CopyFromID": structureIDValue,
                         "Inactive": 0,
-                        "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                        "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                        "CreatedBy": createdByUserID,
+                        "ModifiedBy": createdByUserID,
                         "DsrOrder": orderType
                     }).then(res => {
                         if (res.data.statusCode == 200 && res.data.status == true) {
@@ -657,8 +658,8 @@ export default function FieldMeasurementsPanel(props) {
                 "TotalVolumeCalculated": Volume,
                 "CopyFromID": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53", // structureIDValue
                 "Inactive": 0,
-                "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                "CreatedBy": createdByUserID,
+                "ModifiedBy": createdByUserID,
                 "DsrOrder": orderType
             }).then((res) => {
                 if (res.data.statusCode == 200 && res.data.status == true) {
@@ -689,8 +690,8 @@ export default function FieldMeasurementsPanel(props) {
                         "TotalVolumeCalculated": Volume,
                         "CopyFromID": structureIDValue,
                         "Inactive": 0,
-                        "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                        "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                        "CreatedBy": createdByUserID,
+                        "ModifiedBy": createdByUserID,
                         "DsrOrder": orderType
                     }).then(res => {
                         if (res.data.statusCode == 200 && res.data.status == true) {
@@ -742,8 +743,8 @@ export default function FieldMeasurementsPanel(props) {
                 "TotalVolumeCalculated": Volume,
                 "CopyFromID": 'BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53', // structureIDValue,
                 "Inactive": 0,
-                "CreatedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
-                "ModifiedBy": "BCDE82B6-65B9-4D79-AF4C-C9F3D14ABB53",
+                "CreatedBy": createdByUserID,
+                "ModifiedBy": createdByUserID,
                 "DsrOrder": orderType
             }).then((res) => {
                 if (res.data.statusCode == 200 && res.data.status == true) {

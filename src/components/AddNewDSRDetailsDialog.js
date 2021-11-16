@@ -31,7 +31,6 @@ export default function AddNewDistrictDialog() {
     const handleSave = () => {
         let dsrCode = document.getElementById("dsrCode").value;
         let dsrName = document.getElementById("dsrName").value;
-
         if (
             dsrCode != null &&
             dsrCode != undefined &&

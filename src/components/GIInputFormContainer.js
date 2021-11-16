@@ -178,7 +178,7 @@ export default function GIInputFormContainer(props) {
        
         let splits=dates.split('-');
         let dateValue=splits[1]+'/'+splits[2]+"/"+splits[0];
-
+        let createdByUserID=localStorage.getItem('USER_ID');
         axios.post(Constant.url + 'UKP/rest/endpoints/InsertGeneralInfo', {
 
             "Reference": refNumber,
@@ -217,8 +217,8 @@ export default function GIInputFormContainer(props) {
             "Depreciation": 0,
             "TotalAmountAfterDep": 0,
             "Inactive": 0,
-            "CreatedBy": "62173014-ec01-4e51-88d7-e6e2a6cb4dd0",
-            "ModifiedBy": "62173014-ec01-4e51-88d7-e6e2a6cb4dd0",
+            "CreatedBy": createdByUserID,
+            "ModifiedBy": createdByUserID,
             "TotalGST": 0
 
         }).then(res => {
@@ -428,11 +428,11 @@ export default function GIInputFormContainer(props) {
 
         axios.get(Constant.url + "UKP/rest/endpoints/GetTalukByDist", {
             params: {
-                Dist_ID: event.target.value
+                "Dist_ID": event.target.value
             }
         }).then((res) => { // alert(districtValue);
             if (res.data.mDistList.length > 0) { // alert("Data is present");
-                console.log(+ "Taluk-------------------->" + res.data.mDistList);
+               // console.log(+ "Taluk-------------------->" + res.data.mDistList);
                 setTaluks(res.data.mDistList);
             } else {
                 alert("No data is present");
@@ -1054,4 +1054,3 @@ export default function GIInputFormContainer(props) {
         </React.Fragment>
     );
 }
-

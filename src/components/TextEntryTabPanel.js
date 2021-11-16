@@ -127,6 +127,7 @@ export default function TextEntryPanel() {
         let horizontalWall2 = document.getElementById('horizontalWall2').value;
         let verticalWall1 = document.getElementById('verticalWall1').value;
         let verticalWall2 = document.getElementById('verticalWall2').value;
+        let createdByUserID=localStorage.getItem('USER_ID');
 
         axios.post(Constants.url + 'UKP/rest/endpoints/InsertTextEntry', {
             "GeneralInfoID": generalInfoID,
@@ -139,7 +140,7 @@ export default function TextEntryPanel() {
             "HorizontalWall2": horizontalWall2,
             "VerticalWall2": verticalWall2,
             "Inactive": 0,
-            "CreatedBy": "158c6170-35c1-4ccb-9082-08e0559ff38d"
+            "CreatedBy": createdByUserID
         }).then(res => {
             if (res.data.status == true && res.data.statusCode == 200) {
                 toast.success("Successfully inserted");

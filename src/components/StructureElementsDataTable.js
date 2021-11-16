@@ -118,8 +118,8 @@ export default function DataTable() {
                 // setRows(response.data)
 
                 let value=response.data.mStrElementList;
-                findAndReplace(value,1 ,"Yes");
-                findAndReplace(value,0 ,"No");
+                findAndReplace(value,1,"Yes");
+                findAndReplace(value,0,"No");
                 setRows(value);
                
              })

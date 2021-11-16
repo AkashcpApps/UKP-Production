@@ -6,9 +6,11 @@ import logo from "../images/karnataka-govt-logo.png";
 import * as Constants from "../utils/Constants";
 import { useHistory } from "react-router-dom";
 import Webpages from ".";
-import img2 from "../images/basavaraj.jpeg";
-import img3 from "../images/ukps.jpg";
+import basavaraj from "../images/basavaraj.jpeg";
+import ukps from "../images/ukps.jpg";
 import {storeSession,getstorageSession} from "../utils/Session";
+import { Redirect } from 'react-router';
+
 
 const axios = require("axios");
 
@@ -16,13 +18,39 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();
+  const[refs,setrefs]=React.useState(true);
   // localStorage.setItem('login', false);
   //localStorage.clear();
   let result = localStorage.getItem("login");
+  const io=()=>{
+  //  browserHistory.push('/')
+ return(<>
+ <Redirect to='/' /></>) ;
+    console.log('Data Not Present');
+  };
   
   if(getstorageSession()!=null){
     history.push("/transactions/general-information");
+    console.log('Data Present');
+  }else{
+   // history.push('/sessionNotFound');
+   // io();
   }
+  React.useEffect(() => {
+    console.log('Hello from useEffect!');
+   // location.reload()
+  }, []);
+  const refreshPage = ()=>{
+    // if(refs==true){
+    //  // window.location.reload(false);
+    // }
+    // setrefs(false);
+   
+  
+ }
+ 
+
+ // window.location.reload(false);
   
   // }else{
   //   history.push('/');
@@ -47,8 +75,12 @@ export default function Login() {
       .then((res) => {
         if (res.data.statusCode == 200 && res.data.status == true) {
           storeSession(res.data);
+          localStorage.setItem('USER_ID', res.data.Id);
+          localStorage.setItem('UserRole', res.data.UserRole);            
+          console.log("USER_ID -> "+localStorage.getItem('USER_ID'));
+          console.log("UserRole -> "+localStorage.getItem('UserRole'));
           history.push("/transactions/general-information");
-          //localStorage.setItem('login', true);
+          //localStorage.setItem('Id', res.data.Id);
          // alert("Success");
         } else {
           // history.push("/transactions/general-information");
@@ -68,17 +100,22 @@ export default function Login() {
   }
 
   return (
+   
     <div className="Login">
+      {
+      
+      refreshPage()
+      }
       <img src={logo} className="center" width="50" height="150" />
       <img
-        src={img2}
+        src={basavaraj}
         style={{ borderRadius: "50%" }}
         className="topleft"
         width="10%"
         height="auto"
       />
       <img
-        src={img3}
+        src={ukps}
         style={{ borderRadius: "50%" }}
         className="topright"
         width="10%"
@@ -94,7 +131,7 @@ export default function Login() {
       <div className="rcorners2">
         <Form onSubmit={handleSubmit}>
           <Form.Group size="lg" controlId="email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>User Name</Form.Label>
             <Form.Control
               autoFocus
               id="name"

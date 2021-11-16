@@ -48,17 +48,17 @@ export default function RegistrationForm() {
 
         // to get the checked name
         const checkedName = event.target.name;
-        setRoleID(checkedName);
+      //  setRoleID(checkedName);
         //alert(checked + " " + checkedValue + " " + checkedName);
     };
 
     const handleRadioChange = (event) => { // alert(event.target.value);
         setValue(event.target.value);
         setRoleID(event.target.value);
-       // alert('RoleID '+event.target.value);
+        //alert('RoleID '+event.target.value);
     };
 
-    const cleraFiled = () => {
+    const cleraFields = () => {
       let firstName = document.getElementById("firstName").value='';
       let lastName = document.getElementById("lastName").value='';
       let emailId = document.getElementById("emailId").value='';
@@ -91,7 +91,7 @@ export default function RegistrationForm() {
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
+        today = mm + '/' + dd + '/' + yyyy;
         if(nullCheck(firstName) && nullCheck(lastName) && nullCheck(emailId) && nullCheck(mobileNumber) && nullCheck(userName) && nullCheck(Password)){
         if (Password === cpassword) {
          //   alert(firstName + ' ' + lastName + ' ' + RoleID + ' ' + emailId + ' ' + parseInt(mobileNumber) + ' ' + today + ' ' + userName);
@@ -118,7 +118,7 @@ export default function RegistrationForm() {
                 }).then((res) => {
                     if (res.data.status == true && res.data.statusCode == 200) {
                         toast.success("Successfully Registered");
-                        cleraFiled();
+                        cleraFields();
                     } else {
                         toast.error("Failed");
                     }

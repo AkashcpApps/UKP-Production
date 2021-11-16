@@ -16,12 +16,35 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SettingsSystemDaydreamIcon from '@material-ui/icons/SettingsSystemDaydream';
 import RestoreIcon from '@material-ui/icons/Restore';
 import SettingsIcon from '@material-ui/icons/Settings';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-const value='admin';
+// {
+//   Id: "1",
+//   Name: "DevAdmin"
+//   },
+//   {
+//   Id: "2",
+//   Name: "Admin"
+//   },
+//   {
+//   Id: "3",
+//   Name: "DataEntry"
+//   }
+
+
+let value=0;
+
+
+// if(digit==0){
+//   value=1; 
+// }
+//let digit=2;
 export let  SidebarData=[];
+if(localStorage.getItem('UserRole')!=null && localStorage.getItem('UserRole')!=undefined){
 
-if(value==='admin')
+const digit=localStorage.getItem('UserRole');
+console.log("UserRole sideBar -> "+localStorage.getItem('UserRole'));
+if(digit==2)
 {
    SidebarData= [
   {
@@ -199,4 +222,5 @@ if(value==='admin')
   ];
 
 
+}
 }

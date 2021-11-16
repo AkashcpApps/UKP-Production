@@ -15,9 +15,7 @@ const columns = [
   { field: 'LastName', headerName: 'LastName', width: 170, headerClassName: 'column-header',
  
   editable: true },
-  { field: 'Level', headerName: 'Level', width: 170, headerClassName: 'column-header',
- 
-  editable: true },
+  // { field: 'Level', headerName: 'Level', width: 170, headerClassName: 'column-header',editable: true },
   { field: 'Email', headerName: 'Email', width: 170, headerClassName: 'column-header',
  
   editable: true },
