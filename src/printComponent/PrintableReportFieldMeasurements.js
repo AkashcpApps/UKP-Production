@@ -123,7 +123,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
               <td>{this.state.mGenInfoReport.TotalBuiltUpArea}</td>
               <td>{this.state.mGenInfoReport.AgeOfStructure}</td>
               <td>{this.state.mGenInfoReport.Depreciation}</td>
-              <td>{this.state.mGenInfoReport.TotalAmount}</td>
+              <td>{ new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'INR' }).format(parseFloat(this.state.mGenInfoReport.TotalAmount))}</td>
             </tr>
           </tbody>
         </table>
@@ -140,8 +140,6 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
           ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           </p>
           <p id="fullReportdetails"></p>
-         
-         
           {
             
             this.state.fullReport.map((value, key) => {
@@ -259,7 +257,7 @@ export default class ComponentToPrintFieldMeasureMents extends React.PureCompone
               endResult += "<b>Rate</b> : " +" "+value.SubDsrRate;
               endResult += "</td>";
               endResult += "<td>";
-              endResult += "<b>Amount:</b> " +" "+ value.mAmount;
+              endResult += "<b>Amount:</b> " +" "+(new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'INR' }).format(parseFloat(value.mAmount)))
               endResult += "</td>";
               endResult += "</tr>";
               endResult += '<table/>';

@@ -19,6 +19,7 @@ class PrintableReportGI extends React.PureComponent {
   state = {
     FmList: [],
     mGenInfoReport: "",
+    totalvoume:""
   };
 
   componentDidMount() {
@@ -31,6 +32,7 @@ class PrintableReportGI extends React.PureComponent {
       .then((res) => {
         this.setState({ FmList: res.data.FmList });
         this.setState({ mGenInfoReport: res.data.mGenInfoReport });
+        console.log("-->"+JSON.stringify( this.state.mGenInfoReport));
       })
       .catch((err) => {
         alert(err);
@@ -94,7 +96,8 @@ class PrintableReportGI extends React.PureComponent {
               <td>{this.state.mGenInfoReport.TotalAmount}</td>
               <td>{this.state.mGenInfoReport.AgeOfStructure}</td>
               <td>{this.state.mGenInfoReport.Depreciation}</td>
-              <td>{this.state.mGenInfoReport.TotalAmount}</td>
+              <td>{ new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'INR' }).format(parseFloat(this.state.mGenInfoReport.TotalAmount))}</td>
+            
             </tr>
           </tbody>
         </table>

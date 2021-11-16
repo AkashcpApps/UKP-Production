@@ -143,7 +143,7 @@ export default function DataTable() {
     //     history.push('/');
     // }
 
-    console.log('GetAllGenInfoV2 ->'+localStorage.getItem('USER_ID'));
+   // console.log('GetAllGenInfoV2 ->'+localStorage.getItem('USER_ID'));
     React.useEffect(() => { // alert("Function called");
         axios.get(Constants.url + 'UKP/rest/endpoints/GetAllGenInfoV2', {
             params: {
@@ -164,7 +164,7 @@ export default function DataTable() {
             }
         });
 
-    }, [])
+    });
 
     const RefreshPage = () => {
         console.log("Refresh");

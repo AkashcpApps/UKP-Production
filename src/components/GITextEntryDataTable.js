@@ -92,7 +92,7 @@ export default function DataTable(props) {
                      alert('Error: ' + error.message);
                  }
              });
-     }, []);
+     });
 
      React.useEffect(() => {
         axios.get(src)

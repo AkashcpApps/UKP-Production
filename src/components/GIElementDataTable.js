@@ -135,7 +135,29 @@ export default function DataTable(props) { // alert(props.ref);
             }
         });
 
-    }, [])
+    });
+
+    // React.useEffect(() => { // alert("Function called");
+    //     axios.get(src, {
+    //         params: {
+    //             'GenInfoID': gridInfoID
+    //         }
+    //     }).then(function (response) {
+    //         setRows(response.data.mFieldMeasurementList);
+    //     }).catch(function (error) {
+    //         if (error.response) {
+    //             alert(error.response.data);
+    //             alert(error.response.status);
+    //             alert(error.response.headers);
+    //         } else if (error.request) {
+    //             alert("Error Request: " + error.request);
+    //             alert('Error: ' + error.message);
+    //         } else {
+    //             alert('Error: ' + error.message);
+    //         }
+    //     });
+
+    // }, [])
 
 
     return (
